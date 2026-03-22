@@ -35,7 +35,9 @@
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
                         'spin-slow': 'spin 12s linear infinite',
-                        'wave': 'wave 2s infinite',
+                        'wave': 'wave 2.5s infinite',
+                        'wobble-simple': 'wobble_simple 1.2s ease-in-out infinite',
+                        'heartbeat': 'heartbeat 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         float: {
@@ -50,6 +52,15 @@
                             '40%': { transform: 'rotate(-4.0deg)' },
                             '50%': { transform: 'rotate(10.0deg)' },
                             '60%, 100%': { transform: 'rotate(0.0deg)' },
+                        },
+                        wobble_simple: {
+                            '0%, 100%': { transform: 'rotate(0deg)' },
+                            '25%': { transform: 'rotate(-12deg)' },
+                            '75%': { transform: 'rotate(12deg)' },
+                        },
+                        heartbeat: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                            '50%': { transform: 'scale(0)', opacity: '0' },
                         }
                     }
                 }
@@ -116,17 +127,7 @@
             transform: translateY(0);
         }
 
-        /* Static Background Noise Overlay */
-        .noise-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: -10;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        /* Stroke Text (Pure black fill + clearer stroke) */
+        /* Stroke Text */
         .text-stroke {
             color: #050505; 
             -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.9);
@@ -151,27 +152,46 @@
             overflow: hidden;
         }
 
-        /* Dynamic TV Static Noise for Images */
+        /* Hand-drawn Sketchy Ellipse for Skills */
+        .sketchy-ellipse {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sketchy-ellipse::before {
+            content: '';
+            position: absolute;
+            inset: -2px -6px; 
+            border: 2px solid #22c55e;
+            border-radius: 50% 50% 50% 50% / 60% 40% 50% 60%;
+            pointer-events: none;
+            transform: rotate(-1deg);
+            filter: drop-shadow(0 0 4px rgba(34,197,94,0.25));
+        }
+
+        /* Dynamic TV Static Noise */
         .card-noise {
             position: relative;
             overflow: hidden;
         }
-        .card-noise::before {
+        .card-noise::after {
             content: '';
             position: absolute;
-            inset: -100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.15; /* Noticeable but not ruining the image */
+            inset: -50%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.35; 
             mix-blend-mode: overlay;
             pointer-events: none;
-            z-index: 15; /* Above image, below hover content */
-            animation: staticNoise 0.3s steps(3) infinite;
+            z-index: 15; 
+            animation: staticNoise 0.25s steps(4) infinite;
         }
         @keyframes staticNoise {
             0% { transform: translate(0, 0); }
-            33% { transform: translate(-5%, 5%); }
-            66% { transform: translate(5%, -5%); }
-            100% { transform: translate(-5%, -5%); }
+            25% { transform: translate(-2%, 2%); }
+            50% { transform: translate(2%, -2%); }
+            75% { transform: translate(-1%, 3%); }
+            100% { transform: translate(2%, -1%); }
         }
     </style>
 </head>
@@ -179,36 +199,6 @@
 
     <!-- Ambient Effects -->
     <div id="mouse-glow"></div>
-    <div class="noise-bg"></div>
-
-    <!-- ========================================== -->
-    <!-- GLOBAL GEEK HUD UI (Visible on all pages)  -->
-    <!-- ========================================== -->
-    <!-- Elegant Blueprint Grid Lines -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
-        <!-- Vertical Lines -->
-        <div class="absolute inset-0 flex justify-between px-[10vw]">
-            <div class="w-px h-full bg-white"></div>
-            <div class="w-px h-full bg-white"></div>
-            <div class="w-px h-full bg-white"></div>
-            <div class="w-px h-full bg-white hidden md:block"></div>
-            <div class="w-px h-full bg-white hidden md:block"></div>
-            <div class="w-px h-full bg-white hidden lg:block"></div>
-        </div>
-        <!-- Horizontal Guide Line -->
-        <div class="absolute top-[25%] left-0 w-full h-px bg-white"></div>
-    </div>
-    
-    <!-- Crosshair & Tag Details (Clearer opacity) -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <!-- Tag -->
-        <div class="absolute top-[25%] left-[5vw] md:left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-1 tracking-widest opacity-70">.welcome_</div>
-        <!-- Crosshair -->
-        <div class="absolute top-[25%] right-[5vw] md:right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
-            <div class="w-8 h-[1px] bg-white/30 absolute"></div>
-            <div class="h-8 w-[1px] bg-white/30 absolute"></div>
-        </div>
-    </div>
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center transition-all duration-300 backdrop-blur-md bg-black/60 border-b border-white/5" id="navbar">
@@ -223,6 +213,7 @@
         <div class="hidden md:flex gap-8 text-sm font-medium tracking-wide">
             <a href="#about" onclick="navigateToHome('#about'); return false;" class="hover:text-brand transition-colors uppercase">ABOUT ME</a>
             <a href="#works" onclick="navigateToHome('#works'); return false;" class="hover:text-brand transition-colors uppercase">WORKS</a>
+            <a href="#skills" onclick="navigateToHome('#skills'); return false;" class="hover:text-brand transition-colors uppercase">SKILLS</a>
             <a href="#contact" onclick="navigateToHome('#contact'); return false;" class="hover:text-brand transition-colors uppercase">CONTACT ME</a>
         </div>
     </nav>
@@ -230,18 +221,36 @@
     <!-- ========================================== -->
     <!-- VIEW 1: HOME PORTFOLIO VIEW                -->
     <!-- ========================================== -->
-    <div id="home-view" class="block transition-opacity duration-500">
+    <div id="home-view" class="block transition-opacity duration-500 relative">
         
         <!-- Hero Section -->
-        <header id="top" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden px-4 md:px-12">
+        <header id="top" class="relative min-h-screen flex items-center justify-center pt-20 px-4 md:px-12 overflow-hidden">
             
+            <!-- GLOBAL GEEK HUD UI -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[25%] left-0 w-full h-px bg-white"></div>
+            </div>
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <div class="absolute top-[25%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.hey_i'm_wency_</div>
+                <div class="absolute top-[25%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                    <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                    <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+                </div>
+            </div>
+
             <!-- Hero Content -->
             <div class="w-full max-w-7xl relative z-10 flex flex-col items-center text-center mt-12">
-                
                 <p class="text-brand font-medium tracking-[0.2em] uppercase mb-4 reveal delay-100">
                     Work Summary 2026 • Portfolio
                 </p>
-                
                 <div class="hero-title-wrap cursor-default reveal delay-200 flex flex-col items-center relative">
                     <h1 class="text-[14vw] md:text-[10rem] font-black italic leading-[0.8] tracking-tighter text-stroke transition-all duration-500 font-inter uppercase">
                         WENXIN
@@ -256,211 +265,215 @@
                 </a>
 
                 <div class="px-6 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-sm md:text-base flex items-center gap-3 reveal delay-400 shadow-xl">
-                    <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand animate-heartbeat shadow-[0_0_8px_rgba(34,197,94,0.8)] flex-shrink-0"></span>
                     C端+B端 产品体验设计
                 </div>
 
                 <div class="font-inter font-bold text-zinc-300 text-lg md:text-2xl tracking-wide px-8 py-4 mt-6 rounded-xl border border-white/5 bg-white/5 backdrop-blur-sm reveal delay-500 shadow-2xl">
                     <span class="text-brand">&lt;</span> Let's turn ideas to products <span class="text-brand">&gt;</span>
                 </div>
-                
             </div>
         </header>
 
         <!-- About & Experience Section -->
-        <section id="about" class="py-24 px-4 md:px-12 relative z-10 flex flex-col justify-center">
-            <div class="max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-16 lg:gap-24">
-                
-                <!-- Left Sticky Column -->
-                <div class="lg:w-5/12 relative">
-                    <div class="sticky top-32 flex flex-col items-start">
-                        
-                        <h2 class="text-5xl md:text-7xl lg:text-[7rem] font-black italic leading-[0.85] tracking-tighter uppercase mb-6 font-inter text-white reveal flex flex-col">
-                            <span>ABOUT</span>
-                            <div class="flex items-center mt-1 relative">
-                                <span class="text-brand">ME.</span>
-                                <!-- Rotated Small Ring -->
-                                <div class="w-24 h-24 md:w-28 md:h-28 ml-4 opacity-60 animate-spin-slow pointer-events-none flex-shrink-0">
-                                    <svg viewBox="0 0 100 100" class="w-full h-full text-zinc-400">
-                                        <defs><path id="circle2" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/></defs>
-                                        <text font-size="11.5" font-weight="bold" fill="currentColor" class="tracking-widest uppercase">
-                                            <textPath xlink:href="#circle2">User Experience Design • UI UX •</textPath>
-                                        </text>
-                                    </svg>
-                                </div>
-                            </div>
-                        </h2>
-                        
-                        <p class="text-zinc-400 text-sm md:text-base leading-relaxed mb-10 reveal delay-100 max-w-sm mt-4">
-                            10年+产品体验设计，从内容设计到金融支付，再到AI设计，持续探索C端与B端不同业务场景的创新设计与体系构建。
-                        </p>
+        <section id="about" class="pt-36 pb-24 md:pt-44 md:pb-24 px-4 md:px-12 relative z-10 flex flex-col justify-center overflow-hidden">
+            
+            <!-- GLOBAL GEEK HUD UI (Locally fixed to this section) -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[15%] left-0 w-full h-px bg-white"></div>
+            </div>
 
-                    </div>
+            <div class="max-w-7xl mx-auto w-full flex flex-col relative z-10">
+                
+                <!-- Top Header: Title Left/Top, Text right aligned to ME. -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between w-full mb-12 md:mb-16 gap-6 md:gap-8 reveal">
+                    
+                    <h2 class="text-5xl md:text-7xl lg:text-[7rem] font-black italic leading-[0.85] tracking-tighter uppercase mb-0 font-inter text-white flex flex-col shrink-0">
+                        <span>ABOUT</span>
+                        <div class="flex items-center mt-1 md:mt-2 relative">
+                            <span class="text-brand">ME.</span>
+                            <!-- Rotating Ring -->
+                            <div class="w-16 h-16 md:w-24 md:h-24 ml-4 opacity-60 animate-spin-slow pointer-events-none flex-shrink-0">
+                                <svg viewBox="0 0 100 100" class="w-full h-full text-zinc-400">
+                                    <defs><path id="circle2" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/></defs>
+                                    <text font-size="11.5" font-weight="bold" fill="currentColor" class="tracking-widest uppercase">
+                                        <textPath xlink:href="#circle2">User Experience Design • UI UX •</textPath>
+                                    </text>
+                                </svg>
+                            </div>
+                        </div>
+                    </h2>
+                    
+                    <!-- Text aligned to the right side of the bottom row -->
+                    <p class="text-zinc-400 text-sm md:text-base leading-relaxed max-w-[480px] lg:max-w-[560px] md:text-right pb-1 md:pb-3 shrink-0">
+                        10年+产品体验设计，从内容设计到金融支付，再到AI设计，<br/>持续探索C端与B端不同业务场景的创新设计与体系构建。
+                    </p>
+
                 </div>
 
-                <!-- Right Timeline Column -->
-                <div class="lg:w-7/12 flex flex-col gap-6 reveal delay-300">
+                <!-- Tightly Packed Experience Grid: 2 Rows Layout -->
+                <div class="flex flex-col gap-3 md:gap-4 reveal delay-300 w-full overflow-hidden">
                     
-                    <!-- Item 1 -->
-                    <div class="relative z-10 hover:z-50">
-                        <div class="p-6 md:p-8 flex flex-col gap-3 opacity-0 pointer-events-none">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-xs">2025 - NOW</div>
-                                <span class="px-3 py-1 text-[10px]">AI Design</span>
+                    <!-- Row 1: 01 and 03 -->
+                    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-3 md:gap-4 w-full">
+                        
+                        <!-- 01 DOUYIN -->
+                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-5 py-6 md:px-8 md:py-8 rounded-xl border border-white/5">
+                            <!-- Pure rectangle line, perfectly left-aligned -->
+                            <div class="w-full h-[6px] bg-brand mb-4 md:mb-5 rounded-none"></div>
+                            <!-- Scaled down number to ~80% and font-extrabold -->
+                            <div class="text-[4rem] md:text-[5rem] font-extrabold leading-[0.8] tracking-tighter text-brand font-inter">01</div>
+                            
+                            <h3 class="text-2xl md:text-3xl font-black uppercase text-brand font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">DOUYIN E-COMMERCE</h3>
+                            <p class="text-white font-bold text-base mt-2">抖音电商 / 体验设计专家</p>
+                            
+                            <div class="flex items-center gap-3 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-xs font-semibold tracking-widest uppercase shrink-0">2025 - NOW</span>
+                                <span class="inline-flex px-2 py-0.5 border border-brand/50 text-[10px] text-brand uppercase font-bold tracking-wider shrink-0">AI Design</span>
                             </div>
-                            <h3 class="text-xl md:text-2xl font-bold">抖音电商</h3>
-                            <p class="text-sm mt-1">专注商家AI的意图探索与营销体验。</p>
-                        </div>
+                            
+                            <p class="text-zinc-500 text-sm leading-relaxed mt-4 md:mt-5 font-medium">专注商家AI的意图探索与营销体验。</p>
 
-                        <!-- Card with Dark Hover + Green Border -->
-                        <div class="bento-card absolute top-0 left-0 w-full h-auto p-6 md:p-8 flex flex-col gap-3 group border border-white/5 hover:bg-[#0a0a0a] hover:border-brand/40 hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] transition-all duration-500 cursor-default">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-zinc-500 font-mono text-xs font-semibold tracking-widest group-hover:text-zinc-400 transition-colors">2025 - NOW</div>
-                                <span class="inline-flex px-3 py-1 rounded-full bg-white/5 text-[10px] text-zinc-300 border border-white/10 group-hover:border-brand/30 group-hover:bg-brand/10 group-hover:text-brand transition-colors shadow-inner">AI Design</span>
-                            </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-brand transition-colors duration-300">抖音电商 <span class="text-zinc-500 font-normal text-lg md:text-xl ml-1 group-hover:text-zinc-400 transition-colors">/ 体验设计专家</span></h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mt-1 group-hover:text-zinc-300 transition-colors duration-300">专注商家AI的意图探索与营销体验。</p>
-
-                            <!-- Expanded Details -->
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out">
+                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
                                 <div class="overflow-hidden">
-                                    <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-400 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        • 主导构建商家AI智能营销体系，提升投放效率与转化率。<br/>
-                                        • 深入探索大模型在C端导购、B端经营场景的创新应用。<br/>
-                                        • 推动全链路组件化与体验规范，保障多端体验一致性。<br/>
-                                        • 跨部门敏捷协同，推动体验度量体系落地并持续优化。
+                                    <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                        <div class="mb-3">• 主导构建商家AI智能营销体系，提升投放效率与转化率。</div>
+                                        <div class="mb-3">• 深入探索大模型在C端导购、B端经营场景的创新应用。</div>
+                                        <div>• 推动全链路组件化与体验规范，保障多端体验一致性。</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- 03 ALIPAY (HUGE NUMBER) -->
+                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-5 py-6 md:px-8 md:py-8 rounded-xl border border-white/5">
+                            <!-- Pure rectangle line -->
+                            <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
+                            <!-- Scaled down number to ~80% of previous size but still larger than 01 -->
+                            <div class="text-[5rem] md:text-[7rem] lg:text-[8.5rem] font-extrabold leading-[0.75] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">03</div>
+                            
+                            <h3 class="text-2xl md:text-3xl lg:text-4xl font-black uppercase text-white group-hover:text-brand font-inter tracking-widest mt-5 md:mt-6 transition-colors duration-500 whitespace-nowrap">ALIPAY</h3>
+                            <p class="text-white font-bold text-base mt-2">支付宝 / 体验设计专家</p>
+                            
+                            <div class="flex items-center gap-3 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-xs font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2018 - 2023</span>
+                                <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">体验架构</span>
+                            </div>
+                            
+                            <p class="text-zinc-500 text-sm leading-relaxed mt-4 md:mt-5 font-medium group-hover:text-zinc-400 transition-colors duration-300">主导商家服务、数字支付、内容生态及创新业务升级与全局规范。</p>
+
+                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
+                                <div class="overflow-hidden">
+                                    <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                        <div class="mb-3">• 深度重构B端效率工具，为千万级商家提供极简经营体验。</div>
+                                        <div class="mb-3">• 牵头大型常态化营销活动（如五福、省钱卡），达成亿级曝光。</div>
+                                        <div>• 构建并维护支付宝核心设计规范体系，赋能跨业务线协同设计。</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <!-- Item 2 -->
-                    <div class="relative z-10 hover:z-50">
-                        <div class="p-6 md:p-8 flex flex-col gap-3 opacity-0 pointer-events-none">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-xs">2024 - 2025</div>
-                                <span class="px-3 py-1 text-[10px]">创业 / 创新</span>
+                    <!-- Row 2: 02, 04, 05 (Three columns, 04 visibly wider) -->
+                    <!-- 1fr 1.4fr 1fr gives 04 a much wider span and visually shrinks 02 and 05 -->
+                    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr_1fr] gap-3 md:gap-4 w-full">
+                        
+                        <!-- 02 STUDIO -->
+                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl border border-white/5">
+                            <!-- Pure rectangle line -->
+                            <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
+                            <div class="text-[3rem] md:text-[4.5rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">02</div>
+                            
+                            <!-- Font size shrunk to text-lg/xl to fit the narrower column -->
+                            <h3 class="text-lg md:text-xl font-black uppercase text-white group-hover:text-brand transition-colors duration-500 font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">DESIGN STUDIO</h3>
+                            <p class="text-white font-bold text-sm md:text-base mt-2">设计工作室 / 独立设计</p>
+                            
+                            <div class="flex items-center gap-2 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-[10px] font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2024 - 2025</span>
+                                <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">创业 / 创新</span>
                             </div>
-                            <h3 class="text-xl md:text-2xl font-bold">设计工作室</h3>
-                            <p class="text-sm mt-1">探索商业闭环与综合解决方案，独立负责多款产品从0到1。</p>
-                        </div>
-
-                        <div class="bento-card absolute top-0 left-0 w-full h-auto p-6 md:p-8 flex flex-col gap-3 group border border-white/5 hover:bg-[#0a0a0a] hover:border-brand/40 hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] transition-all duration-500 cursor-default">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-zinc-500 font-mono text-xs font-semibold tracking-widest group-hover:text-zinc-400 transition-colors">2024 - 2025</div>
-                                <span class="inline-flex px-3 py-1 rounded-full bg-white/5 text-[10px] text-zinc-300 border border-white/10 group-hover:border-brand/30 group-hover:bg-brand/10 group-hover:text-brand transition-colors shadow-inner">创业 / 创新</span>
-                            </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-brand transition-colors duration-300">设计工作室 <span class="text-zinc-500 font-normal text-lg md:text-xl ml-1 group-hover:text-zinc-400 transition-colors">/ 独立设计</span></h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mt-1 group-hover:text-zinc-300 transition-colors duration-300">探索商业闭环与综合解决方案，独立负责多款产品从0到1。</p>
-
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out">
+                            
+                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
                                 <div class="overflow-hidden">
-                                    <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-400 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        • 深入剖析业务诉求，提供兼顾商业价值与用户体验的方案。<br/>
-                                        • 独立完成从概念构思、交互框架到高保真视觉的端到端设计。<br/>
-                                        • 涵盖多元化行业应用，积累丰富的B端SaaS与C端增长经验。<br/>
-                                        • 与研发无缝衔接，跟进高标准落地，实现体验价值最大化。
+                                    <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                        <p class="text-zinc-400 text-xs md:text-sm leading-relaxed mb-3 font-medium">探索商业闭环与综合解决方案，独立负责多款产品从0到1。</p>
+                                        <div class="text-xs md:text-sm text-zinc-400 leading-relaxed">
+                                            <div class="mb-3">• 深入剖析业务诉求，提供兼顾商业价值与用户体验的方案。</div>
+                                            <div class="mb-3">• 独立完成从概念构思、交互框架到高保真视觉的端到端设计。</div>
+                                            <div>• 涵盖多元化行业应用，积累丰富的B端SaaS与C端增长经验。</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Item 3 -->
-                    <div class="relative z-10 hover:z-50">
-                        <div class="p-6 md:p-8 flex flex-col gap-3 opacity-0 pointer-events-none">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-xs">2018 - 2023</div>
-                                <span class="px-3 py-1 text-[10px]">体验架构</span>
+                        <!-- 04 NETEASE -->
+                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl border border-white/5">
+                            <!-- Pure rectangle line -->
+                            <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
+                            <div class="text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">04</div>
+                            
+                            <!-- Retained text-xl/2xl since this column is wider -->
+                            <h3 class="text-xl md:text-2xl font-black uppercase text-white group-hover:text-brand transition-colors duration-500 font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">NETEASE NEWS</h3>
+                            <p class="text-white font-bold text-sm md:text-base mt-2">网易新闻 / 资深设计师</p>
+                            
+                            <div class="flex items-center gap-2 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-[10px] font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2014 - 2018</span>
+                                <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">C端体验</span>
                             </div>
-                            <h3 class="text-xl md:text-2xl font-bold">支付宝</h3>
-                            <p class="text-sm mt-1">主导商家服务、数字支付、内容生态及创新业务升级与全局规范。</p>
-                        </div>
-
-                        <div class="bento-card absolute top-0 left-0 w-full h-auto p-6 md:p-8 flex flex-col gap-3 group border border-white/5 hover:bg-[#0a0a0a] hover:border-brand/40 hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] transition-all duration-500 cursor-default">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-zinc-500 font-mono text-xs font-semibold tracking-widest group-hover:text-zinc-400 transition-colors">2018 - 2023</div>
-                                <span class="inline-flex px-3 py-1 rounded-full bg-white/5 text-[10px] text-zinc-300 border border-white/10 group-hover:border-brand/30 group-hover:bg-brand/10 group-hover:text-brand transition-colors shadow-inner">体验架构</span>
-                            </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-brand transition-colors duration-300">支付宝 <span class="text-zinc-500 font-normal text-lg md:text-xl ml-1 group-hover:text-zinc-400 transition-colors">/ 体验设计专家</span></h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mt-1 group-hover:text-zinc-300 transition-colors duration-300">主导商家服务、数字支付、内容生态及创新业务升级与全局规范。</p>
-
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out">
+                            
+                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
                                 <div class="overflow-hidden">
-                                    <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-400 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        • 深度重构B端效率工具，为千万级商家提供极简经营体验。<br/>
-                                        • 牵头大型常态化营销活动（如五福、省钱卡），达成亿级曝光。<br/>
-                                        • 构建并维护支付宝核心设计规范体系，赋能跨业务线协同设计。<br/>
-                                        • 孵化创新业务“吆喝”，利用AI赋能动态贴纸，打造行业标杆。
+                                    <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                        <p class="text-zinc-400 text-xs md:text-sm leading-relaxed mb-3 font-medium">主导网易新闻客户端核心链路交互及创新业务场景体验设计。</p>
+                                        <div class="text-xs md:text-sm text-zinc-400 leading-relaxed">
+                                            <div class="mb-3">• 负责新闻客户端首页信息流、图文短视频等核心模块体验改版。</div>
+                                            <div class="mb-3">• 结合用户阅读习惯与内容分发策略，持续优化交互与视觉呈现。</div>
+                                            <div>• 参与跟帖社区、积分商城等互动业务的从0到1架构与设计探索。</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Item 4 -->
-                    <div class="relative z-10 hover:z-50">
-                        <div class="p-6 md:p-8 flex flex-col gap-3 opacity-0 pointer-events-none">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-xs">2014 - 2018</div>
-                                <span class="px-3 py-1 text-[10px]">C端体验</span>
+                        <!-- 05 EARLY -->
+                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl border border-white/5">
+                            <!-- Pure rectangle line -->
+                            <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
+                            <div class="text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">05</div>
+                            
+                            <!-- Font size shrunk to text-lg/xl to fit the narrower column -->
+                            <h3 class="text-lg md:text-xl font-black uppercase text-white group-hover:text-brand transition-colors duration-500 font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">EARLY CAREER</h3>
+                            <p class="text-white font-bold text-sm md:text-base mt-2">更早 / 3D与UI设计</p>
+                            
+                            <div class="flex items-center gap-2 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-[10px] font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2011 - 2013</span>
+                                <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">3D & UI</span>
                             </div>
-                            <h3 class="text-xl md:text-2xl font-bold">网易新闻</h3>
-                            <p class="text-sm mt-1">主导网易新闻客户端核心链路交互及创新业务场景体验设计。</p>
-                        </div>
 
-                        <div class="bento-card absolute top-0 left-0 w-full h-auto p-6 md:p-8 flex flex-col gap-3 group border border-white/5 hover:bg-[#0a0a0a] hover:border-brand/40 hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] transition-all duration-500 cursor-default">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-zinc-500 font-mono text-xs font-semibold tracking-widest group-hover:text-zinc-400 transition-colors">2014 - 2018</div>
-                                <span class="inline-flex px-3 py-1 rounded-full bg-white/5 text-[10px] text-zinc-300 border border-white/10 group-hover:border-brand/30 group-hover:bg-brand/10 group-hover:text-brand transition-colors shadow-inner">C端体验</span>
-                            </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-brand transition-colors duration-300">网易新闻 <span class="text-zinc-500 font-normal text-lg md:text-xl ml-1 group-hover:text-zinc-400 transition-colors">/ 资深设计师</span></h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mt-1 group-hover:text-zinc-300 transition-colors duration-300">主导网易新闻客户端核心链路交互及创新业务场景体验设计。</p>
-
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out">
+                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
                                 <div class="overflow-hidden">
-                                    <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-400 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        • 负责新闻客户端首页信息流、图文短视频等核心模块体验改版。<br/>
-                                        • 结合用户阅读习惯与内容分发策略，持续优化交互与视觉呈现。<br/>
-                                        • 参与跟帖社区、积分商城等互动业务的从0到1架构与设计探索。<br/>
-                                        • 提炼网易新闻UI规范体系，提升端内一致性并沉淀设计资产。
+                                    <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                        <p class="text-zinc-400 text-xs md:text-sm leading-relaxed mb-3 font-medium">曾任职于音悦台及George P. Johnson，本科毕业于北京工业大学。</p>
+                                        <div class="text-xs md:text-sm text-zinc-400 leading-relaxed">
+                                            <div class="mb-3">• 在音悦台主导多端视觉设计与专题策划，培养了敏锐的流行审美。</div>
+                                            <div class="mb-3">• 参与线上线下大型展会的数字物料输出与全方位体验协同。</div>
+                                            <div>• 积累了深厚的3D建模与精细化UI视觉表现功底，不断拓宽边界。</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Item 5 -->
-                    <div class="relative z-10 hover:z-50">
-                        <div class="p-6 md:p-8 flex flex-col gap-3 opacity-0 pointer-events-none">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-xs">2011 - 2013</div>
-                                <span class="px-3 py-1 text-[10px]">3D & UI</span>
-                            </div>
-                            <h3 class="text-xl md:text-2xl font-bold">更早</h3>
-                            <p class="text-sm mt-1">曾任职于音悦台及George P. Johnson，本科毕业于北京工业大学。</p>
-                        </div>
-
-                        <div class="bento-card absolute top-0 left-0 w-full h-auto p-6 md:p-8 flex flex-col gap-3 group border border-white/5 hover:bg-[#0a0a0a] hover:border-brand/40 hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] transition-all duration-500 cursor-default">
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="text-zinc-500 font-mono text-xs font-semibold tracking-widest group-hover:text-zinc-400 transition-colors">2011 - 2013</div>
-                                <span class="inline-flex px-3 py-1 rounded-full bg-white/5 text-[10px] text-zinc-300 border border-white/10 group-hover:border-brand/30 group-hover:bg-brand/10 group-hover:text-brand transition-colors shadow-inner">3D & UI</span>
-                            </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-brand transition-colors duration-300">更早 <span class="text-zinc-500 font-normal text-lg md:text-xl ml-1 group-hover:text-zinc-400 transition-colors">/ 3D与UI设计</span></h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mt-1 group-hover:text-zinc-300 transition-colors duration-300">曾任职于音悦台及George P. Johnson，本科毕业于北京工业大学。</p>
-
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out">
-                                <div class="overflow-hidden">
-                                    <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-400 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        • 在音悦台主导多端视觉设计与专题策划，培养了敏锐的流行审美。<br/>
-                                        • 参与线上线下大型展会的数字物料输出与全方位体验协同。<br/>
-                                        • 积累了深厚的3D建模与精细化UI视觉表现功底，不断拓宽边界。<br/>
-                                        • 本科工业设计专业出身，具备严谨的逻辑思维与用户同理心基础。
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
@@ -468,24 +481,46 @@
         </section>
 
         <!-- Works Portfolio Section -->
-        <section id="works" class="py-24 px-4 md:px-12 relative z-10">
-            <div class="max-w-7xl mx-auto">
+        <section id="works" class="py-24 px-4 md:px-12 relative z-10 overflow-hidden">
+            
+            <!-- GLOBAL GEEK HUD UI -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[15%] left-0 w-full h-px bg-white"></div>
+            </div>
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <!-- HUD Tag repositioned above title -->
+                <div class="absolute top-[8%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.welcome_to_my_workshop_</div>
+                <div class="absolute top-[15%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                    <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                    <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto relative z-10 mt-8">
                 
-                <!-- Left Aligned Title -->
-                <div class="text-left mb-16 reveal">
-                    <h2 class="text-5xl md:text-7xl lg:text-[7rem] font-black italic leading-[0.85] tracking-tighter uppercase mb-4 font-inter">
+                <!-- Flex Aligned Title and Scroll Indicator -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal w-full gap-2 md:gap-0">
+                    <h2 class="text-5xl md:text-7xl lg:text-[7rem] font-black italic leading-[0.85] tracking-tighter uppercase m-0 font-inter">
                         <span class="text-white">SELECTED</span><br/><span class="text-brand">WORKS.</span>
                     </h2>
-                    <p class="text-zinc-500 uppercase tracking-widest text-xs font-mono">Scroll to explore</p>
+                    <p class="text-white font-bold italic uppercase tracking-widest text-sm md:text-base font-inter pb-2 md:pb-4 mt-4 md:mt-0 text-left md:text-right ml-5">Scroll to explore</p>
                 </div>
 
-                <!-- 6 Column Image Grid with Card Noise -->
+                <!-- 6 Column Image Grid with Custom TV Noise -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 md:gap-y-6">
                     
                     <!-- Card 1 -->
                     <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView()">
-                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise">
-                            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -507,8 +542,8 @@
 
                     <!-- Card 2 -->
                     <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView()">
-                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise">
-                            <img src="https://images.unsplash.com/photo-1516280440502-861d85e43a96?auto=format&fit=crop&w=800&q=80" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="https://images.unsplash.com/photo-1516280440502-861d85e43a96?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -530,8 +565,8 @@
 
                     <!-- Card 3 -->
                     <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView()">
-                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise">
-                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -553,8 +588,8 @@
 
                     <!-- Card 4 -->
                     <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView()">
-                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise">
-                            <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=800&q=80" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -576,8 +611,8 @@
 
                     <!-- Card 5 -->
                     <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView()">
-                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -599,8 +634,8 @@
 
                     <!-- Card 6 -->
                     <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView()">
-                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise">
-                            <img src="https://images.unsplash.com/photo-1616469829941-c7200edec809?auto=format&fit=crop&w=800&q=80" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="https://images.unsplash.com/photo-1616469829941-c7200edec809?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -624,27 +659,190 @@
             </div>
         </section>
 
+        <!-- Skills Section (Hand-drawn Map) -->
+        <section id="skills" class="py-24 px-4 md:px-12 relative z-10 overflow-hidden">
+            
+            <!-- GLOBAL GEEK HUD UI -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[25%] left-0 w-full h-px bg-white"></div>
+            </div>
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <div class="absolute top-[8%] left-[5vw] md:left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-1 tracking-widest opacity-70">.skills_map_</div>
+                <div class="absolute top-[8%] right-[5vw] md:right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                    <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                    <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto relative z-10">
+                <!-- Title -->
+                <div class="text-left mb-2 reveal">
+                    <h2 class="text-5xl md:text-7xl lg:text-[7rem] font-black italic leading-[0.85] tracking-tighter uppercase font-inter text-white">
+                        SKILLS.
+                    </h2>
+                </div>
+
+                <!-- Sketchy Mind Map Layout -->
+                <div class="relative w-full max-w-[1000px] mx-auto aspect-auto md:aspect-[2/1] min-h-[500px] md:min-h-0 flex items-center justify-center reveal delay-100">
+                    
+                    <!-- Mobile View -->
+                    <div class="md:hidden flex flex-col items-center gap-6 w-full px-4 mt-4">
+                        <div class="w-40 h-40 bg-brand/10 border-2 border-brand rounded-full flex flex-col items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.2)] z-20">
+                            <span class="text-white text-xl font-black tracking-widest">核心</span>
+                            <span class="text-white text-xl font-black tracking-widest mt-1">设计能力</span>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-4 w-full mt-4">
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-lg">产品直觉</div>
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-xl">设计体系建设</div>
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-lg">项目管理</div>
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-base">人才培养管理</div>
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-base">AI 协同</div>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-3 w-full mt-2">
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">数据驱动</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">视觉表现</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">商业思维</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">创新力</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">交互逻辑</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">用户思维</div>
+                        </div>
+                    </div>
+
+                    <!-- Desktop View -->
+                    <div class="hidden md:block absolute inset-0 w-full h-full">
+                        
+                        <!-- SVG Connecting Lines -->
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                            <defs>
+                                <marker id="sketchy-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M 0 1 L 8 5 L 0 9" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </marker>
+                            </defs>
+                            <path d="M 390 220 Q 300 160 260 190" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#sketchy-arrow)" stroke-linecap="round" class="filter drop-shadow-md"/>
+                            <path d="M 610 250 Q 700 210 750 260" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#sketchy-arrow)" stroke-linecap="round" class="filter drop-shadow-md"/>
+                            <path d="M 580 320 Q 650 380 720 400" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#sketchy-arrow)" stroke-linecap="round" class="filter drop-shadow-md"/>
+                        </svg>
+
+                        <!-- Central Core Node -->
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-52 h-52 bg-brand/10 border-2 border-brand rounded-full flex flex-col items-center justify-center z-20 shadow-[0_0_50px_rgba(34,197,94,0.15)] backdrop-blur-sm">
+                            <span class="text-white text-2xl font-black tracking-widest">核心</span>
+                            <span class="text-white text-2xl font-black tracking-widest mt-1">设计能力</span>
+                        </div>
+
+                        <!-- Inner Solid Green Pills -->
+                        <div class="absolute top-[32%] left-[40%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">数据驱动</div>
+                        <div class="absolute top-[38%] left-[62%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">视觉表现</div>
+                        <div class="absolute top-[58%] left-[68%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">商业思维</div>
+                        <div class="absolute top-[75%] left-[62%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">创新力</div>
+                        <div class="absolute top-[75%] left-[38%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">交互逻辑</div>
+                        <div class="absolute top-[56%] left-[32%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">用户思维</div>
+
+                        <!-- Outer Sketchy Hollow Ellipses -->
+                        <div class="absolute top-[38%] left-[16%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-6 py-2 sketchy-ellipse text-white font-bold text-2xl tracking-wide">产品直觉</div>
+                        </div>
+                        <div class="absolute top-[82%] left-[20%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-8 py-3 sketchy-ellipse text-white font-bold text-3xl tracking-wide">设计体系建设</div>
+                        </div>
+                        <div class="absolute top-[28%] left-[82%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-5 py-1.5 sketchy-ellipse text-white font-bold text-xl tracking-wide">人才培养管理</div>
+                        </div>
+                        <div class="absolute top-[54%] left-[85%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-6 py-2 sketchy-ellipse text-white font-bold text-2xl tracking-wide">项目管理</div>
+                        </div>
+                        <div class="absolute top-[84%] left-[80%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-4 py-1.5 sketchy-ellipse text-white font-bold text-xl tracking-wide">AI 协同</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Contact & Footer Section -->
         <footer id="contact" class="pt-24 pb-12 relative overflow-hidden flex flex-col justify-center min-h-[50vh]">
             
-            <div class="max-w-7xl mx-auto px-4 md:px-12 w-full reveal">
+            <!-- GLOBAL GEEK HUD UI -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[12%] left-0 w-full h-px bg-white"></div>
+            </div>
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <div class="absolute top-[12%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.same_vibe?_message_me_</div>
+                <div class="absolute top-[12%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                    <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                    <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+                </div>
+            </div>
+
+            <!-- Content Container -->
+            <div class="max-w-7xl mx-auto px-4 md:px-12 w-full reveal mt-12 md:mt-8">
                 
-                <!-- 2-Line Footer Typography & Waving Emoji fix -->
-                <div class="group relative inline-block cursor-default mb-10 w-full text-left">
+                <!-- 2-Line Footer Typography -->
+                <div class="group relative inline-block cursor-default mb-6 w-full text-left">
                     <h2 class="text-[10vw] md:text-[6rem] lg:text-[7rem] font-black italic leading-[1.0] tracking-tighter text-white uppercase select-none font-inter transition-transform duration-500 group-hover:translate-x-2">
                         LET'S TURN
                         <span class="inline-block relative w-0 h-0">
-                            <span class="absolute left-2 md:left-4 bottom-[-0.2em] md:bottom-0 text-5xl md:text-6xl lg:text-7xl opacity-0 transform scale-50 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 ease-out origin-bottom-left z-20 group-hover:animate-wave pointer-events-none">
+                            <!-- Perfect Waving Hand Animation with wrist anchored -->
+                            <span class="absolute left-2 md:left-4 bottom-[-0.2em] md:bottom-0 text-5xl md:text-6xl lg:text-7xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out origin-[70%_100%] z-20 pointer-events-none group-hover:animate-wave">
                                 👋
                             </span>
                         </span>
                         <br/>
-                        IDEAS TO PRODUCTS.
+                        <span class="text-brand">IDEAS TO PRODUCTS.</span>
                     </h2>
                 </div>
 
+                <!-- Sleek Hobbies & Interests Section -->
+                <div class="mt-20 w-full border-t border-white/10 pt-16 flex flex-col items-start text-left">
+                    
+                    <h3 class="text-sm md:text-base font-bold italic tracking-widest uppercase mb-10 text-zinc-500 font-inter">HOBBIES & INTERESTS</h3>
+                    
+                    <!-- Left-aligned tight columns with smooth wobble hover -->
+                    <div class="flex flex-col md:flex-row flex-wrap gap-8 md:gap-16">
+                        <!-- Hobby 1 -->
+                        <div class="flex flex-col items-start group cursor-default">
+                            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/20 bg-white/5 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:border-brand shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+                                <span class="text-2xl md:text-3xl filter drop-shadow-md group-hover:animate-wobble-simple inline-block origin-center transition-transform duration-300">📖</span>
+                            </div>
+                            <h4 class="text-lg font-bold mb-1 tracking-wide text-white ml-3">阅读</h4>
+                            <p class="text-zinc-400 text-xs ml-3">持续学习、知识迁移</p>
+                        </div>
+                        <!-- Hobby 2 -->
+                        <div class="flex flex-col items-start group cursor-default">
+                            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/20 bg-white/5 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:border-brand shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+                                <span class="text-2xl md:text-3xl filter drop-shadow-md group-hover:animate-wobble-simple inline-block origin-center transition-transform duration-300">🤖</span>
+                            </div>
+                            <h4 class="text-lg font-bold mb-1 tracking-wide text-white ml-3">自动化</h4>
+                            <p class="text-zinc-400 text-xs ml-3">探索生活中「AI自动化」</p>
+                        </div>
+                        <!-- Hobby 3 -->
+                        <div class="flex flex-col items-start group cursor-default">
+                            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/20 bg-white/5 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:border-brand shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+                                <span class="text-2xl md:text-3xl filter drop-shadow-md group-hover:animate-wobble-simple inline-block origin-center transition-transform duration-300">⛰️</span>
+                            </div>
+                            <h4 class="text-lg font-bold mb-1 tracking-wide text-white ml-3">徒步</h4>
+                            <p class="text-zinc-400 text-xs ml-3">爱世界、耐心与毅力</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Contact Links -->
-                <div class="flex flex-col md:flex-row justify-start items-center gap-4 text-xs md:text-sm border-t border-white/10 pt-8 mt-12">
+                <div class="flex flex-col md:flex-row justify-start items-center gap-4 text-xs md:text-sm border-t border-white/10 pt-8 mt-20 relative z-10">
                     <a href="mailto:wencywong.118@gmail.com" class="flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand/50 transition-all group">
                         <i data-lucide="mail" class="text-brand group-hover:scale-110 transition-transform w-4 h-4"></i>
                         wencywong.118@gmail.com
@@ -659,9 +857,9 @@
                     </div>
                 </div>
 
-                <div class="mt-16 text-zinc-600 text-xs flex flex-col md:flex-row justify-between items-center">
+                <div class="mt-16 text-zinc-600 text-xs flex flex-col md:flex-row justify-between items-center relative z-10">
                     <p>© 2026 Wenxin Wong. All rights reserved.</p>
-                    <p class="mt-2 md:mt-0 flex items-center gap-2">Designed with <i data-lucide="heart" class="w-3 h-3 text-brand fill-brand"></i> Let's turn ideas to products</p>
+                    <p class="mt-2 md:mt-0 flex items-center gap-2">Designed with <i data-lucide="heart" class="w-3 h-3 text-brand fill-brand"></i> Vibe Coding.</p>
                 </div>
             </div>
         </footer>
@@ -673,20 +871,41 @@
     <!-- ========================================== -->
     <div id="project-view" class="hidden min-h-screen pt-32 pb-24 px-4 md:px-12 w-full max-w-7xl mx-auto transition-opacity duration-500 relative z-10">
         
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-sans font-medium mb-6 text-white tracking-tight reveal">
+        <!-- Details View GEEK HUD UI -->
+        <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+            <div class="absolute inset-0 flex justify-between px-[10vw]">
+                <div class="w-px h-full bg-white"></div>
+                <div class="w-px h-full bg-white"></div>
+                <div class="w-px h-full bg-white"></div>
+                <div class="w-px h-full bg-white hidden md:block"></div>
+                <div class="w-px h-full bg-white hidden md:block"></div>
+                <div class="w-px h-full bg-white hidden lg:block"></div>
+            </div>
+            <div class="absolute top-[20%] left-0 w-full h-px bg-white"></div>
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+            <div class="absolute top-[20%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.project_details_</div>
+            <div class="absolute top-[20%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+            </div>
+        </div>
+
+
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-sans font-medium mb-6 text-white tracking-tight reveal relative z-10">
             TokenSense (Web3.0) 2025
         </h1>
         
-        <h2 class="text-2xl md:text-3xl text-zinc-200 font-sans font-medium mb-10 max-w-4xl leading-snug reveal delay-100">
+        <h2 class="text-2xl md:text-3xl text-zinc-200 font-sans font-medium mb-10 max-w-4xl leading-snug reveal delay-100 relative z-10">
             加密货币金融产品，由生成式AI提供实时货币追踪与分析
         </h2>
 
-        <p class="text-zinc-400 text-sm md:text-base max-w-3xl leading-relaxed mb-16 reveal delay-200">
+        <p class="text-zinc-400 text-sm md:text-base max-w-3xl leading-relaxed mb-16 reveal delay-200 relative z-10">
             TokenSense 是一款结合AI能力的加密货币金融产品，主要面向海外用户，为交易前决策提供必要的信息和预测。核心目标是满足快速上线的期望，提供即时的AI对话服务，并展示贪婪指数和交易策略的分析。
         </p>
 
         <!-- Meta Data Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 reveal delay-300">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 reveal delay-300 relative z-10">
             <div>
                 <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">客户 / 目标用户</h4>
                 <p class="text-zinc-300 text-sm">GlobalFinance Inc.</p>
@@ -705,10 +924,9 @@
             </div>
         </div>
 
-        <!-- Scroll Reveal Images Stack (6 Distinct Unsplash Images) -->
-        <div class="w-full flex flex-col gap-12 mt-16">
+        <!-- Scroll Reveal Images Stack -->
+        <div class="w-full flex flex-col gap-12 mt-16 relative z-10">
             
-            <!-- Img 1 -->
             <div class="w-full aspect-[16/10] bg-gradient-to-b from-zinc-800 to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex items-end justify-center pt-16 px-8 relative reveal">
                 <div class="w-full max-w-5xl aspect-[16/10] bg-[#111111] rounded-t-2xl shadow-2xl border border-white/10 border-b-0 overflow-hidden relative">
                     <div class="w-full h-10 bg-white/5 flex items-center px-4 gap-2 border-b border-white/5">
@@ -716,33 +934,28 @@
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
                     </div>
-                    <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=1200&q=80" alt="" class="w-full h-full object-cover opacity-90" />
+                    <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=1200&q=80" alt="界面展示图1" class="w-full h-full object-cover opacity-90" />
                 </div>
             </div>
 
-            <!-- Img 2 -->
             <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1618044733300-9472054094ee?auto=format&fit=crop&w=1200&q=80" alt="" class="w-full h-auto object-cover opacity-90" />
+                <img src="https://images.unsplash.com/photo-1618044733300-9472054094ee?auto=format&fit=crop&w=1200&q=80" alt="界面展示图2" class="w-full h-auto object-cover opacity-90" />
             </div>
 
-            <!-- Img 3 -->
             <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1639322537504-6427a16b0a28?auto=format&fit=crop&w=1200&q=80" alt="" class="w-full h-auto object-cover opacity-90" />
+                <img src="https://images.unsplash.com/photo-1639322537504-6427a16b0a28?auto=format&fit=crop&w=1200&q=80" alt="界面展示图3" class="w-full h-auto object-cover opacity-90" />
             </div>
 
-            <!-- Img 4 -->
             <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&w=1200&q=80" alt="" class="w-full h-auto object-cover opacity-90" />
+                <img src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&w=1200&q=80" alt="界面展示图4" class="w-full h-auto object-cover opacity-90" />
             </div>
             
-            <!-- Img 5 -->
             <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1614064641913-6b714041d1eb?auto=format&fit=crop&w=1200&q=80" alt="" class="w-full h-auto object-cover opacity-90" />
+                <img src="https://images.unsplash.com/photo-1614064641913-6b714041d1eb?auto=format&fit=crop&w=1200&q=80" alt="界面展示图5" class="w-full h-auto object-cover opacity-90" />
             </div>
 
-            <!-- Img 6 -->
             <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="" class="w-full h-auto object-cover opacity-90" />
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="界面展示图6" class="w-full h-auto object-cover opacity-90" />
             </div>
 
         </div>
