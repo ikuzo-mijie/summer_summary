@@ -152,7 +152,7 @@
             overflow: hidden;
         }
 
-        /* Hand-drawn Sketchy Ellipse for Skills */
+        /* Hand-drawn Sketchy Ellipse for Skills (Fixed Roundness) */
         .sketchy-ellipse {
             position: relative;
             display: inline-flex;
@@ -164,7 +164,7 @@
             position: absolute;
             inset: -2px -6px; 
             border: 2px solid #22c55e;
-            border-radius: 50% 50% 50% 50% / 60% 40% 50% 60%;
+            border-radius: 49% 51% 48% 52% / 51% 49% 52% 48%;
             pointer-events: none;
             transform: rotate(-1deg);
             filter: drop-shadow(0 0 4px rgba(34,197,94,0.25));
@@ -275,10 +275,10 @@
             </div>
         </header>
 
-        <!-- About & Experience Section -->
-        <section id="about" class="pt-36 pb-24 md:pt-44 md:pb-24 px-4 md:px-12 relative z-10 flex flex-col justify-center overflow-hidden">
+        <!-- About & Experience Section (1.5x padding) -->
+        <section id="about" class="pt-40 pb-24 md:pt-52 md:pb-24 px-4 md:px-12 relative z-10 flex flex-col justify-center overflow-hidden">
             
-            <!-- GLOBAL GEEK HUD UI (Locally fixed to this section) -->
+            <!-- GLOBAL GEEK HUD UI (No Tags here, only the grid lines) -->
             <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
                 <div class="absolute inset-0 flex justify-between px-[10vw]">
                     <div class="w-px h-full bg-white"></div>
@@ -293,7 +293,7 @@
 
             <div class="max-w-7xl mx-auto w-full flex flex-col relative z-10">
                 
-                <!-- Top Header: Title Left/Top, Text right aligned to ME. -->
+                <!-- ABOUT ME Header (Two lines, text right aligned to ME.) -->
                 <div class="flex flex-col md:flex-row md:items-end justify-between w-full mb-12 md:mb-16 gap-6 md:gap-8 reveal">
                     
                     <h2 class="text-5xl md:text-7xl lg:text-[7rem] font-black italic leading-[0.85] tracking-tighter uppercase mb-0 font-inter text-white flex flex-col shrink-0">
@@ -312,9 +312,9 @@
                         </div>
                     </h2>
                     
-                    <!-- Text aligned to the right side of the bottom row -->
+                    <!-- Forced to not break into 3 lines easily, right aligned visually -->
                     <p class="text-zinc-400 text-sm md:text-base leading-relaxed max-w-[480px] lg:max-w-[560px] md:text-right pb-1 md:pb-3 shrink-0">
-                        10年+产品体验设计，从内容设计到金融支付，再到AI设计，<br/>持续探索C端与B端不同业务场景的创新设计与体系构建。
+                        10年+产品体验设计，从内容到金融，再到AI设计，<br class="hidden md:block"/>持续探索C端和B端不同业务场景下的创新与设计体系构建。
                     </p>
 
                 </div>
@@ -326,11 +326,11 @@
                     <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-3 md:gap-4 w-full">
                         
                         <!-- 01 DOUYIN -->
-                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-5 py-6 md:px-8 md:py-8 rounded-xl border border-white/5">
-                            <!-- Pure rectangle line, perfectly left-aligned -->
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-5 py-6 md:px-8 md:py-8 rounded-xl">
+                            <!-- Pure rectangle line -->
                             <div class="w-full h-[6px] bg-brand mb-4 md:mb-5 rounded-none"></div>
-                            <!-- Scaled down number to ~80% and font-extrabold -->
-                            <div class="text-[4rem] md:text-[5rem] font-extrabold leading-[0.8] tracking-tighter text-brand font-inter">01</div>
+                            <!-- Font-extrabold and scaled -->
+                            <div class="text-[4.5rem] md:text-[6rem] font-extrabold leading-[0.8] tracking-tighter text-brand font-inter">01</div>
                             
                             <h3 class="text-2xl md:text-3xl font-black uppercase text-brand font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">DOUYIN E-COMMERCE</h3>
                             <p class="text-white font-bold text-base mt-2">抖音电商 / 体验设计专家</p>
@@ -345,16 +345,16 @@
                             <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
                                 <div class="overflow-hidden">
                                     <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <div class="mb-3">• 主导构建商家AI智能营销体系，提升投放效率与转化率。</div>
-                                        <div class="mb-3">• 深入探索大模型在C端导购、B端经营场景的创新应用。</div>
-                                        <div>• 推动全链路组件化与体验规范，保障多端体验一致性。</div>
+                                        <div class="mb-3">• 探索LLM 在商家场景的经营助手形态与能力边界。</div>
+                                        <div class="mb-3">• 参与B 端规范体系建设，关注组件Skill化后带来的设计提效。</div>
+                                        <div>• 优化大促营销体验，显性平台活动价值，提高GMV。</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 03 ALIPAY (HUGE NUMBER) -->
-                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-5 py-6 md:px-8 md:py-8 rounded-xl border border-white/5">
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-5 py-6 md:px-8 md:py-8 rounded-xl">
                             <!-- Pure rectangle line -->
                             <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
                             <!-- Scaled down number to ~80% of previous size but still larger than 01 -->
@@ -368,14 +368,14 @@
                                 <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">体验架构</span>
                             </div>
                             
-                            <p class="text-zinc-500 text-sm leading-relaxed mt-4 md:mt-5 font-medium group-hover:text-zinc-400 transition-colors duration-300">主导商家服务、数字支付、内容生态及创新业务升级与全局规范。</p>
+                            <p class="text-zinc-500 text-sm leading-relaxed mt-4 md:mt-5 font-medium group-hover:text-zinc-400 transition-colors duration-300">数字支付、内容生态等体系建设、横向设计质量把控。</p>
 
                             <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
                                 <div class="overflow-hidden">
                                     <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <div class="mb-3">• 深度重构B端效率工具，为千万级商家提供极简经营体验。</div>
-                                        <div class="mb-3">• 牵头大型常态化营销活动（如五福、省钱卡），达成亿级曝光。</div>
-                                        <div>• 构建并维护支付宝核心设计规范体系，赋能跨业务线协同设计。</div>
+                                        <div class="mb-3">• 重构支付工具，为千万级商家提供极简高效的移动端收单体验。</div>
+                                        <div class="mb-3">• 改版消息触达体系，针对信息进行分层与结构的精细化设计。</div>
+                                        <div>• 搭建端框架底层设计规范及内容设计规范，跨业务协同设计。</div>
                                     </div>
                                 </div>
                             </div>
@@ -383,15 +383,14 @@
 
                     </div>
 
-                    <!-- Row 2: 02, 04, 05 (Three columns, 04 visibly wider) -->
-                    <!-- 1fr 1.4fr 1fr gives 04 a much wider span and visually shrinks 02 and 05 -->
+                    <!-- Row 2: 02, 04, 05 (1fr 1.4fr 1fr for wider center) -->
                     <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr_1fr] gap-3 md:gap-4 w-full">
                         
                         <!-- 02 STUDIO -->
-                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl border border-white/5">
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl">
                             <!-- Pure rectangle line -->
                             <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
-                            <div class="text-[3rem] md:text-[4.5rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">02</div>
+                            <div class="text-[3.5rem] md:text-[5rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">02</div>
                             
                             <!-- Font size shrunk to text-lg/xl to fit the narrower column -->
                             <h3 class="text-lg md:text-xl font-black uppercase text-white group-hover:text-brand transition-colors duration-500 font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">DESIGN STUDIO</h3>
@@ -404,25 +403,20 @@
                             
                             <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
                                 <div class="overflow-hidden">
-                                    <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <p class="text-zinc-400 text-xs md:text-sm leading-relaxed mb-3 font-medium">探索商业闭环与综合解决方案，独立负责多款产品从0到1。</p>
-                                        <div class="text-xs md:text-sm text-zinc-400 leading-relaxed">
-                                            <div class="mb-3">• 深入剖析业务诉求，提供兼顾商业价值与用户体验的方案。</div>
-                                            <div class="mb-3">• 独立完成从概念构思、交互框架到高保真视觉的端到端设计。</div>
-                                            <div>• 涵盖多元化行业应用，积累丰富的B端SaaS与C端增长经验。</div>
-                                        </div>
+                                    <div class="pt-4 mt-2 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                        <p class="text-sm text-zinc-500 font-normal leading-loose">对接外研社旗下应用的设计需求，如外研优学/趣学的品牌焕新升级，完整VI手册，智能对话助手尝试，日常运营活动等。</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 04 NETEASE -->
-                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl border border-white/5">
+                        <!-- 04 NETEASE (SMALLER NUMBER) -->
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl">
                             <!-- Pure rectangle line -->
                             <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
-                            <div class="text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">04</div>
+                            <!-- Font-extrabold small -->
+                            <div class="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">04</div>
                             
-                            <!-- Retained text-xl/2xl since this column is wider -->
                             <h3 class="text-xl md:text-2xl font-black uppercase text-white group-hover:text-brand transition-colors duration-500 font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">NETEASE NEWS</h3>
                             <p class="text-white font-bold text-sm md:text-base mt-2">网易新闻 / 资深设计师</p>
                             
@@ -434,24 +428,25 @@
                             <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
                                 <div class="overflow-hidden">
                                     <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <p class="text-zinc-400 text-xs md:text-sm leading-relaxed mb-3 font-medium">主导网易新闻客户端核心链路交互及创新业务场景体验设计。</p>
-                                        <div class="text-xs md:text-sm text-zinc-400 leading-relaxed">
-                                            <div class="mb-3">• 负责新闻客户端首页信息流、图文短视频等核心模块体验改版。</div>
-                                            <div class="mb-3">• 结合用户阅读习惯与内容分发策略，持续优化交互与视觉呈现。</div>
-                                            <div>• 参与跟帖社区、积分商城等互动业务的从0到1架构与设计探索。</div>
+                                        <p class="text-sm text-zinc-500 leading-relaxed mb-3 font-normal">专注持续升级图文短视频的分发与消费体验。</p>
+                                        <div class="text-sm text-zinc-500 leading-relaxed font-normal">
+                                            <div class="mb-3">• 主导信息流、内容详情、跟帖等核心模块体验改版。</div>
+                                            <div class="mb-3">• 网易财经移动端的金融设计。</div>
+                                            <div class="mb-3">• 2014/2018 世界杯、网易态度盛典等大型活动的策划与设计。</div>
+                                            <div>• 与Google 团队合作设计，使网易新闻成为Google推荐优秀App。</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 05 EARLY -->
-                        <div class="w-full flex flex-col group bg-black hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl border border-white/5">
+                        <!-- 05 EARLY (SMALLER NUMBER) -->
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl">
                             <!-- Pure rectangle line -->
                             <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
-                            <div class="text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">05</div>
+                            <!-- Font-extrabold small -->
+                            <div class="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">05</div>
                             
-                            <!-- Font size shrunk to text-lg/xl to fit the narrower column -->
                             <h3 class="text-lg md:text-xl font-black uppercase text-white group-hover:text-brand transition-colors duration-500 font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">EARLY CAREER</h3>
                             <p class="text-white font-bold text-sm md:text-base mt-2">更早 / 3D与UI设计</p>
                             
@@ -463,11 +458,10 @@
                             <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
                                 <div class="overflow-hidden">
                                     <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <p class="text-zinc-400 text-xs md:text-sm leading-relaxed mb-3 font-medium">曾任职于音悦台及George P. Johnson，本科毕业于北京工业大学。</p>
-                                        <div class="text-xs md:text-sm text-zinc-400 leading-relaxed">
-                                            <div class="mb-3">• 在音悦台主导多端视觉设计与专题策划，培养了敏锐的流行审美。</div>
-                                            <div class="mb-3">• 参与线上线下大型展会的数字物料输出与全方位体验协同。</div>
-                                            <div>• 积累了深厚的3D建模与精细化UI视觉表现功底，不断拓宽边界。</div>
+                                        <div class="text-sm text-zinc-500 leading-relaxed font-normal">
+                                            <div class="mb-3">• 音悦台 / 设计，创意活动设计，网站迭代优化等。</div>
+                                            <div class="mb-3">• George P. Johnson / Designer，西门子、阿尔斯通等公司的活动3D&2D设计，英文工作环境。</div>
+                                            <div>• 北京工业大学｜工业设计｜本科</div>
                                         </div>
                                     </div>
                                 </div>
@@ -496,7 +490,7 @@
                 <div class="absolute top-[15%] left-0 w-full h-px bg-white"></div>
             </div>
             <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-                <!-- HUD Tag repositioned above title -->
+                <!-- HUD Tag repositioned above title cleanly -->
                 <div class="absolute top-[8%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.welcome_to_my_workshop_</div>
                 <div class="absolute top-[15%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
                     <div class="w-8 h-[1px] bg-white/30 absolute"></div>
@@ -520,7 +514,7 @@
                     <!-- Card 1 -->
                     <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView()">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
-                            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <img src="./ALIPAY.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -533,8 +527,8 @@
                                     <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
                                 </div>
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">商家服务体验升级</h3>
-                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">数字支付 · 效率工具</p>
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">数字支付体验升级</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">商家服务 · 让天下没有难做的生意</p>
                                 </div>
                             </div>
                         </div>
@@ -543,7 +537,7 @@
                     <!-- Card 2 -->
                     <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView()">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
-                            <img src="https://images.unsplash.com/photo-1516280440502-861d85e43a96?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <img src="./AI.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -552,12 +546,12 @@
                         <div class="relative h-14 overflow-hidden mt-4">
                             <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-brand mb-0.5">AI驱动动态营销解决方案</h3>
+                                    <h3 class="text-base font-bold text-brand mb-0.5">AI 驱动以意图为核心的设计探索</h3>
                                     <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
                                 </div>
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">设计创新 - 吆喝</h3>
-                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">AI 赋能 · 动态贴纸</p>
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">商家Agent设计实践</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">CUI会话设计 · 抖音电商 抖店</p>
                                 </div>
                             </div>
                         </div>
@@ -566,7 +560,7 @@
                     <!-- Card 3 -->
                     <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView()">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
-                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <img src="./IM.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -575,12 +569,12 @@
                         <div class="relative h-14 overflow-hidden mt-4">
                             <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-brand mb-0.5">千万级曝光活动矩阵设计</h3>
+                                    <h3 class="text-base font-bold text-brand mb-0.5">C端 信息的精细化设计</h3>
                                     <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
                                 </div>
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">常态化营销</h3>
-                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">省钱卡 · 商家五福 · 补贴</p>
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">支付宝消息触达体系</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">合理的框架 · 分层的触达 · 精细化的表达</p>
                                 </div>
                             </div>
                         </div>
@@ -589,7 +583,7 @@
                     <!-- Card 4 -->
                     <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView()">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
-                            <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <img src="./NETEASE.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -598,12 +592,12 @@
                         <div class="relative h-14 overflow-hidden mt-4">
                             <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-brand mb-0.5">信息流架构与组件升级</h3>
+                                    <h3 class="text-base font-bold text-brand mb-0.5">C 端多体裁的内容设计</h3>
                                     <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
                                 </div>
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">内容与框架</h3>
-                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">首页改版 · 图文短视频</p>
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">网易新闻的内容消费体验</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">有态度的媒体 · 有态度的内容</p>
                                 </div>
                             </div>
                         </div>
@@ -612,7 +606,7 @@
                     <!-- Card 5 -->
                     <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView()">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <img src="./NEW.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -621,12 +615,12 @@
                         <div class="relative h-14 overflow-hidden mt-4">
                             <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-brand mb-0.5">探索社区生活新商业模式</h3>
+                                    <h3 class="text-base font-bold text-brand mb-0.5">探索B&C多场景的新机会</h3>
                                     <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
                                 </div>
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">横向与创新业务</h3>
-                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">账本小程序 · 社区生活</p>
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">创新业务</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">吆喝 · 小账本 · 金融设计</p>
                                 </div>
                             </div>
                         </div>
@@ -635,7 +629,7 @@
                     <!-- Card 6 -->
                     <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView()">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
-                            <img src="https://images.unsplash.com/photo-1616469829941-c7200edec809?auto=format&fit=crop&w=800&q=80" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <img src="./SKILL.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
                                 <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
@@ -644,12 +638,12 @@
                         <div class="relative h-14 overflow-hidden mt-4">
                             <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-brand mb-0.5">构建可复用智能设计资产</h3>
+                                    <h3 class="text-base font-bold text-brand mb-0.5">不止设计</h3>
                                     <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
                                 </div>
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">规范与组件探索</h3>
-                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">设计规范 · 智能创意</p>
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">Skills & Agent 学习</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">让每一个想法成为可用的能力</p>
                                 </div>
                             </div>
                         </div>
@@ -782,6 +776,7 @@
                 <div class="absolute top-[12%] left-0 w-full h-px bg-white"></div>
             </div>
             <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <!-- Text repositioned safely -->
                 <div class="absolute top-[12%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.same_vibe?_message_me_</div>
                 <div class="absolute top-[12%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
                     <div class="w-8 h-[1px] bg-white/30 absolute"></div>
