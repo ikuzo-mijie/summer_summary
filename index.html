@@ -179,7 +179,8 @@
             content: '';
             position: absolute;
             inset: -50%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            /* 恢复原始版本结构，仅将 baseFrequency 从 0.8 改为 1.6，实现颗粒缩小一倍 */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             opacity: 0.35; 
             mix-blend-mode: overlay;
             pointer-events: none;
@@ -239,7 +240,7 @@
                 <div class="absolute top-[25%] left-0 w-full h-px bg-white"></div>
             </div>
             <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-                <div class="absolute top-[25%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.hey_i'm_wency (v0.1)</div>
+                <div class="absolute top-[25%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.hey_i'm_wency (v0.2)</div>
                 <div class="absolute top-[25%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
                     <div class="w-8 h-[1px] bg-white/30 absolute"></div>
                     <div class="h-8 w-[1px] bg-white/30 absolute"></div>
@@ -374,7 +375,7 @@
                                 <div class="overflow-hidden">
                                     <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                                         <div class="mb-3">• 重构支付工具，为千万级商家提供极简高效的移动端收单体验。</div>
-                                        <div class="mb-3">• 改版消息触达体系，针对信息进行分层与结构的精细化设计。</div>
+                                        <div class="mb-3">• 改版消息触达体系，针对信息进行分层与精细化设计。</div>
                                         <div>• 搭建端框架底层设计规范及内容设计规范，跨业务协同设计。</div>
                                     </div>
                                 </div>
@@ -421,7 +422,7 @@
                             <p class="text-white font-bold text-sm md:text-base mt-2">网易新闻 / 资深设计师</p>
                             
                             <div class="flex items-center gap-2 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
-                                <span class="text-zinc-500 font-mono text-[10px] font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2014 - 2018</span>
+                                <span class="text-zinc-500 font-mono text-[10px] font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2013 - 2018</span>
                                 <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">C端体验</span>
                             </div>
                             
@@ -511,8 +512,8 @@
                 <!-- 6 Column Image Grid with Custom TV Noise -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 md:gap-y-6">
                     
-                    <!-- Card 1 -->
-                    <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView()">
+                    <!-- Card 1 (Proj 1) -->
+                    <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView('proj-1')">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
                             <img src="./ALIPAY.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
@@ -534,8 +535,8 @@
                         </div>
                     </div>
 
-                    <!-- Card 2 -->
-                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView()">
+                    <!-- Card 2 (Proj 2 placeholder) -->
+                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView('proj-2')">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
                             <img src="./AI.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
@@ -557,8 +558,8 @@
                         </div>
                     </div>
 
-                    <!-- Card 3 -->
-                    <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView()">
+                    <!-- Card 3 (Proj 3 placeholder) -->
+                    <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView('proj-3')">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
                             <img src="./IM.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
@@ -580,8 +581,8 @@
                         </div>
                     </div>
 
-                    <!-- Card 4 -->
-                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView()">
+                    <!-- Card 4 (Proj 4 placeholder) -->
+                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView('proj-4')">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
                             <img src="./NETEASE.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
@@ -603,8 +604,8 @@
                         </div>
                     </div>
 
-                    <!-- Card 5 -->
-                    <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView()">
+                    <!-- Card 5 (Proj 5 placeholder) -->
+                    <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView('proj-5')">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
                             <img src="./NEW.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
@@ -615,7 +616,7 @@
                         <div class="relative h-14 overflow-hidden mt-4">
                             <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
                                 <div class="h-1/2 w-full flex flex-col justify-center">
-                                    <h3 class="text-base font-bold text-brand mb-0.5">探索B&C多场景的新机会</h3>
+                                    <h3 class="text-base font-bold text-brand mb-0.5">从真实用户出发挖掘新机会</h3>
                                     <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
                                 </div>
                                 <div class="h-1/2 w-full flex flex-col justify-center">
@@ -626,8 +627,8 @@
                         </div>
                     </div>
 
-                    <!-- Card 6 -->
-                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView()">
+                    <!-- Card 6 (Proj 6 placeholder) -->
+                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView('proj-6')">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
                             <img src="./SKILL.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
@@ -823,7 +824,7 @@
                                 <span class="text-2xl md:text-3xl filter drop-shadow-md group-hover:animate-wobble-simple inline-block origin-center transition-transform duration-300">🤖</span>
                             </div>
                             <h4 class="text-lg font-bold mb-1 tracking-wide text-white ml-3">自动化</h4>
-                            <p class="text-zinc-400 text-xs ml-3">探索生活中「AI自动化」</p>
+                            <p class="text-zinc-400 text-xs ml-3">探索生活中的智能自动化</p>
                         </div>
                         <!-- Hobby 3 -->
                         <div class="flex flex-col items-start group cursor-default">
@@ -866,6 +867,13 @@
     <!-- ========================================== -->
     <div id="project-view" class="hidden min-h-screen pt-32 pb-24 px-4 md:px-12 w-full max-w-7xl mx-auto transition-opacity duration-500 relative z-10">
         
+        <!-- Global Close/Back Button -->
+        <div class="fixed top-8 right-8 md:right-12 z-50">
+            <button onclick="navigateToHome('#works')" class="w-12 h-12 rounded-full bg-zinc-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-brand hover:text-black hover:border-brand transition-all shadow-2xl group cursor-pointer">
+                <i data-lucide="x" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+            </button>
+        </div>
+
         <!-- Details View GEEK HUD UI -->
         <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
             <div class="absolute inset-0 flex justify-between px-[10vw]">
@@ -887,72 +895,264 @@
         </div>
 
 
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-sans font-medium mb-6 text-white tracking-tight reveal relative z-10">
-            TokenSense (Web3.0) 2025
-        </h1>
-        
-        <h2 class="text-2xl md:text-3xl text-zinc-200 font-sans font-medium mb-10 max-w-4xl leading-snug reveal delay-100 relative z-10">
-            加密货币金融产品，由生成式AI提供实时货币追踪与分析
-        </h2>
+        <!-- PROJECT 1: ALIPAY B-END EFFICIENCY -->
+        <div id="proj-1" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                数字支付体验升级
+            </h1>
 
-        <p class="text-zinc-400 text-sm md:text-base max-w-3xl leading-relaxed mb-16 reveal delay-200 relative z-10">
-            TokenSense 是一款结合AI能力的加密货币金融产品，主要面向海外用户，为交易前决策提供必要的信息和预测。核心目标是满足快速上线的期望，提供即时的AI对话服务，并展示贪婪指数和交易策略的分析。
-        </p>
-
-        <!-- Meta Data Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 reveal delay-300 relative z-10">
-            <div>
-                <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">客户 / 目标用户</h4>
-                <p class="text-zinc-300 text-sm">GlobalFinance Inc.</p>
-            </div>
-            <div>
-                <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">我的角色</h4>
-                <p class="text-zinc-300 text-sm">UI & UX 设计<br/>视觉设计<br/>品牌设计</p>
-            </div>
-            <div>
-                <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属行业</h4>
-                <p class="text-zinc-300 text-sm">Web 3.0</p>
-            </div>
-            <div>
-                <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">日期</h4>
-                <p class="text-zinc-300 text-sm">12/2024</p>
-            </div>
-        </div>
-
-        <!-- Scroll Reveal Images Stack -->
-        <div class="w-full flex flex-col gap-12 mt-16 relative z-10">
-            
-            <div class="w-full aspect-[16/10] bg-gradient-to-b from-zinc-800 to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex items-end justify-center pt-16 px-8 relative reveal">
-                <div class="w-full max-w-5xl aspect-[16/10] bg-[#111111] rounded-t-2xl shadow-2xl border border-white/10 border-b-0 overflow-hidden relative">
-                    <div class="w-full h-10 bg-white/5 flex items-center px-4 gap-2 border-b border-white/5">
-                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=1200&q=80" alt="界面展示图1" class="w-full h-full object-cover opacity-90" />
+            <!-- Meta Data Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">千万级实体小微商家</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">体验升级<br/>端框架规范</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">支付宝 商家服务</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2022 - 2023</p>
                 </div>
             </div>
 
-            <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1618044733300-9472054094ee?auto=format&fit=crop&w=1200&q=80" alt="界面展示图2" class="w-full h-auto object-cover opacity-90" />
+            <!-- Scroll Reveal Images Stack (11 images, 16:9 aspect ratio) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+                
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-7.png" alt="项目展示图 7" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-8.png" alt="项目展示图 8" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-9.png" alt="项目展示图 9" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-10.png" alt="项目展示图 10" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-11.png" alt="项目展示图 11" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PROJECT 2: AI AGENT DESIGN -->
+        <div id="proj-2" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                商家Agent设计实践
+            </h1>
+
+            <!-- Meta Data Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">抖音电商海量商家</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">AI Design<br/>CUI会话设计</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">抖音电商 抖店</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2025 - NOW</p>
+                </div>
             </div>
 
-            <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1639322537504-6427a16b0a28?auto=format&fit=crop&w=1200&q=80" alt="界面展示图3" class="w-full h-auto object-cover opacity-90" />
+            <!-- Scroll Reveal Images Stack (5 images) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+            </div>
+        </div>
+        
+        <!-- PROJECT 3: MESSAGE REACH -->
+        <div id="proj-3" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                支付宝消息触达体系
+            </h1>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">支付宝全量C端用户</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">体验升级<br/>精细化设计</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">支付宝</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2018 - 2023</p>
+                </div>
             </div>
 
-            <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&w=1200&q=80" alt="界面展示图4" class="w-full h-auto object-cover opacity-90" />
+            <!-- Scroll Reveal Images Stack (10 images) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-7.png" alt="项目展示图 7" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-8.png" alt="项目展示图 8" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-9.png" alt="项目展示图 9" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-10.png" alt="项目展示图 10" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
             </div>
-            
-            <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1614064641913-6b714041d1eb?auto=format&fit=crop&w=1200&q=80" alt="界面展示图5" class="w-full h-auto object-cover opacity-90" />
+        </div>
+
+        <!-- PROJECT 4: NETEASE NEWS -->
+        <div id="proj-4" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                网易新闻的内容消费体验
+            </h1>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">泛资讯阅读群体</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">核心链路改版<br/>多体裁内容设计</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">网易新闻客户端</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2013 - 2018</p>
+                </div>
             </div>
 
-            <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 reveal">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="界面展示图6" class="w-full h-auto object-cover opacity-90" />
+            <!-- Scroll Reveal Images Stack (7 images) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-7.png" alt="项目展示图 7" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+            </div>
+        </div>
+
+        <!-- PROJECT 5: INNOVATION -->
+        <div id="proj-5" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                创新业务探索与设计
+            </h1>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">B端&C端细分潜力客群</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">从0到1架构<br/>综合解决方案</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">吆喝/小账本等创新业务</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2018 - 2025</p>
+                </div>
             </div>
 
+            <!-- Scroll Reveal Images Stack (8 images) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-7.png" alt="项目展示图 7" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-8.png" alt="项目展示图 8" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+            </div>
+        </div>
+
+        <!-- PROJECT 6: SKILLS & AGENT -->
+        <div id="proj-6" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                Skills & Agent 学习与沉淀
+            </h1>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">内部团队与协同角色</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">组件Skill化<br/>智能化资产构建</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">规范与资产体系</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2024 - 2026</p>
+                </div>
+            </div>
+
+            <!-- Scroll Reveal Images Stack (3 images) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj6-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj6-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj6-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+            </div>
         </div>
 
     </div>
@@ -963,12 +1163,26 @@
         lucide.createIcons();
 
         // --- SPA Routing Logic ---
-        function showProjectView() {
+        function showProjectView(projectId = 'proj-1') {
             const homeView = document.getElementById('home-view');
             const projView = document.getElementById('project-view');
             
+            // Toggle Views
             homeView.classList.add('hidden');
             projView.classList.remove('hidden');
+
+            // Hide all project sections
+            document.querySelectorAll('.project-section').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+
+            // Show target project section
+            const targetProj = document.getElementById(projectId);
+            if (targetProj) {
+                targetProj.classList.remove('hidden');
+                targetProj.classList.add('block');
+            }
             
             // Force a slight delay to let DOM render, then trigger smooth scroll and reveals
             setTimeout(() => {
