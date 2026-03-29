@@ -203,12 +203,19 @@
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center transition-all duration-300 backdrop-blur-md bg-black/60 border-b border-white/5" id="navbar">
-        <!-- Abstract Shapes Logo -->
-        <a href="#top" onclick="navigateToHome('#top'); return false;" class="flex items-center gap-2.5 group cursor-pointer" aria-label="Home">
-            <div class="w-3.5 h-3.5 rounded-full bg-brand group-hover:-translate-y-1 transition-transform"></div>
-            <div class="w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[12px] border-b-white group-hover:-translate-y-1 transition-transform delay-75"></div>
-            <div class="w-3.5 h-3.5 bg-zinc-400 group-hover:-translate-y-1 transition-transform delay-150 rounded-sm"></div>
-        </a>
+        <div class="flex items-center">
+            <!-- Abstract Shapes Logo -->
+            <a href="#top" onclick="navigateToHome('#top'); return false;" class="flex items-center gap-2.5 group cursor-pointer" aria-label="Home">
+                <div class="w-3.5 h-3.5 rounded-full bg-brand group-hover:-translate-y-1 transition-transform"></div>
+                <div class="w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[12px] border-b-white group-hover:-translate-y-1 transition-transform delay-75"></div>
+                <div class="w-3.5 h-3.5 bg-zinc-400 group-hover:-translate-y-1 transition-transform delay-150 rounded-sm"></div>
+            </a>
+            
+            <!-- Back Arrow Button -->
+            <button onclick="goBack()" class="flex items-center justify-center w-8 h-8 rounded-full bg-transparent border border-transparent hover:bg-white/10 hover:border-white/20 text-white hover:text-brand transition-all ml-6 cursor-pointer" aria-label="Go Back">
+                <i data-lucide="arrow-left" class="w-4 h-4 stroke-[2.5px]"></i>
+            </button>
+        </div>
         
         <!-- Nav Links -->
         <div class="hidden md:flex gap-8 text-sm font-medium tracking-wide">
@@ -240,7 +247,7 @@
                 <div class="absolute top-[25%] left-0 w-full h-px bg-white"></div>
             </div>
             <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-                <div class="absolute top-[25%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.hey_i'm_wency (v0.2)</div>
+                <div class="absolute top-[25%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.hey_i'm_wency (v0.3)</div>
                 <div class="absolute top-[25%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
                     <div class="w-8 h-[1px] bg-white/30 absolute"></div>
                     <div class="h-8 w-[1px] bg-white/30 absolute"></div>
@@ -343,13 +350,12 @@
                             
                             <p class="text-zinc-500 text-sm leading-relaxed mt-4 md:mt-5 font-medium">专注商家AI的意图探索与营销体验。</p>
 
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
-                                <div class="overflow-hidden">
-                                    <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <div class="mb-3">• 探索LLM 在商家场景的经营助手形态与能力边界。</div>
-                                        <div class="mb-3">• 参与B 端规范体系建设，关注组件Skill化后带来的设计提效。</div>
-                                        <div>• 优化大促营销体验，显性平台活动价值，提高GMV。</div>
-                                    </div>
+                            <!-- 修复点：移除了 grid-rows-0，使用静态高度与透明度/位移动画结合，杜绝布局跳动 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <div class="mb-3">• 探索LLM 在商家场景的经营助手形态与能力边界。</div>
+                                    <div class="mb-3">• 参与B 端规范体系建设，关注组件Skill化后带来的设计提效。</div>
+                                    <div>• 优化大促营销体验，显性平台活动价值，提高GMV。</div>
                                 </div>
                             </div>
                         </div>
@@ -371,13 +377,12 @@
                             
                             <p class="text-zinc-500 text-sm leading-relaxed mt-4 md:mt-5 font-medium group-hover:text-zinc-400 transition-colors duration-300">数字支付、内容生态等体系建设、横向设计质量把控。</p>
 
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
-                                <div class="overflow-hidden">
-                                    <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <div class="mb-3">• 重构支付工具，为千万级商家提供极简高效的移动端收单体验。</div>
-                                        <div class="mb-3">• 改版消息触达体系，针对信息进行分层与精细化设计。</div>
-                                        <div>• 搭建端框架底层设计规范及内容设计规范，跨业务协同设计。</div>
-                                    </div>
+                            <!-- 修复点 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <div class="mb-3">• 重构支付工具，为千万级商家提供极简高效的移动端收单体验。</div>
+                                    <div class="mb-3">• 改版消息触达体系，针对信息进行分层与精细化设计。</div>
+                                    <div>• 搭建端框架底层设计规范及内容设计规范，跨业务协同设计。</div>
                                 </div>
                             </div>
                         </div>
@@ -402,11 +407,10 @@
                                 <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">创业 / 创新</span>
                             </div>
                             
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
-                                <div class="overflow-hidden">
-                                    <div class="pt-4 mt-2 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <p class="text-sm text-zinc-500 font-normal leading-loose">对接外研社旗下应用的设计需求，如外研优学/趣学的品牌焕新升级，完整VI手册，智能对话助手尝试，日常运营活动等。</p>
-                                    </div>
+                            <!-- 修复点 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-2 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <p class="text-sm text-zinc-500 font-normal leading-loose">对接外研社旗下应用的设计需求，如外研优学/趣学的品牌焕新升级，完整VI手册，智能对话助手尝试，日常运营活动等。</p>
                                 </div>
                             </div>
                         </div>
@@ -426,16 +430,15 @@
                                 <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">C端体验</span>
                             </div>
                             
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
-                                <div class="overflow-hidden">
-                                    <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <p class="text-sm text-zinc-500 leading-relaxed mb-3 font-normal">专注持续升级图文短视频的分发与消费体验。</p>
-                                        <div class="text-sm text-zinc-500 leading-relaxed font-normal">
-                                            <div class="mb-3">• 主导信息流、内容详情、跟帖等核心模块体验改版。</div>
-                                            <div class="mb-3">• 网易财经移动端的金融设计。</div>
-                                            <div class="mb-3">• 2014/2018 世界杯、网易态度盛典等大型活动的策划与设计。</div>
-                                            <div>• 与Google 团队合作设计，使网易新闻成为Google推荐优秀App。</div>
-                                        </div>
+                            <!-- 修复点 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <p class="text-sm text-zinc-500 leading-relaxed mb-3 font-normal">专注持续升级图文短视频的分发与消费体验。</p>
+                                    <div class="text-sm text-zinc-500 leading-relaxed font-normal">
+                                        <div class="mb-3">• 主导信息流、内容详情、跟帖等核心模块体验改版。</div>
+                                        <div class="mb-3">• 网易财经移动端的金融设计。</div>
+                                        <div class="mb-3">• 2014/2018 世界杯、网易态度盛典等大型活动的策划与设计。</div>
+                                        <div>• 与Google 团队合作设计，使网易新闻成为Google推荐优秀App。</div>
                                     </div>
                                 </div>
                             </div>
@@ -456,14 +459,13 @@
                                 <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">3D & UI</span>
                             </div>
 
-                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out w-full">
-                                <div class="overflow-hidden">
-                                    <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <div class="text-sm text-zinc-500 leading-relaxed font-normal">
-                                            <div class="mb-3">• 音悦台 / 设计，创意活动设计，网站迭代优化等。</div>
-                                            <div class="mb-3">• George P. Johnson / Designer，西门子、阿尔斯通等公司的活动3D&2D设计，英文工作环境。</div>
-                                            <div>• 北京工业大学｜工业设计｜本科</div>
-                                        </div>
+                            <!-- 修复点 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <div class="text-sm text-zinc-500 leading-relaxed font-normal">
+                                        <div class="mb-3">• 音悦台 / 设计，创意活动设计，网站迭代优化等。</div>
+                                        <div class="mb-3">• George P. Johnson / Designer，西门子、阿尔斯通等公司的活动3D&2D设计，英文工作环境。</div>
+                                        <div>• 北京工业大学｜工业设计｜本科</div>
                                     </div>
                                 </div>
                             </div>
@@ -996,14 +998,14 @@
                     <p class="text-zinc-300 text-sm">2025 - NOW</p>
                 </div>
             </div>
-
-            <!-- Scroll Reveal Images Stack (5 images) -->
+            <!-- Scroll Reveal Images Stack (6 images) -->
             <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
-                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-[7/6]"><img src="./proj2-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
                 <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
                 <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
                 <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
                 <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
             </div>
         </div>
         
@@ -1162,8 +1164,27 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
+        // 增加一个全局变量，用于记录离开主页时的滚动位置
+        let homeScrollPosition = 0;
+
         // --- SPA Routing Logic ---
+        
+        // 全局智能返回函数
+        function goBack() {
+            const projView = document.getElementById('project-view');
+            if (!projView.classList.contains('hidden')) {
+                // 如果当前在详情页，则执行返回首页（并恢复滚动锚点）的逻辑
+                navigateToHome();
+            } else {
+                // 如果当前已经在首页，则执行浏览器原生的“返回上一页”逻辑
+                window.history.back();
+            }
+        }
+
         function showProjectView(projectId = 'proj-1') {
+            // 1. 记录当前主页的滚动高度
+            homeScrollPosition = window.scrollY;
+
             const homeView = document.getElementById('home-view');
             const projView = document.getElementById('project-view');
             
@@ -1184,14 +1205,19 @@
                 targetProj.classList.add('block');
             }
             
-            // Force a slight delay to let DOM render, then trigger smooth scroll and reveals
+            // 2. 使用 instant 行为强制瞬间置顶，拒绝从半腰往上滚
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+            // 3. 修复首屏不显示的 Bug：
+            // 因为置顶是瞬间发生的，IntersectionObserver 无法捕获滚动事件，
+            // 所以我们需要注销并重新监听详情页里的所有动画元素，强制它们立即进行一次视口检测。
             setTimeout(() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                // Reset all reveals inside project view to trigger them fresh
                 document.querySelectorAll('#project-view .reveal').forEach(el => {
-                    el.classList.remove('active');
+                    el.classList.remove('active'); // 先清空状态
+                    revealObserver.unobserve(el); // 停止监听
+                    revealObserver.observe(el);   // 重新监听，立即触发首屏元素的浮现
                 });
-            }, 10);
+            }, 20); // 给浏览器 20ms 的渲染喘息时间
         }
 
         function navigateToHome(targetId) {
@@ -1202,12 +1228,16 @@
             homeView.classList.remove('hidden');
             
             if (targetId) {
+                // 如果是从顶部导航栏点击的（有 targetId），则平滑滚动到目标锚点
                 setTimeout(() => {
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         targetElement.scrollIntoView({ behavior: 'smooth' });
                     }
                 }, 10);
+            } else {
+                // 3. 如果是从详情页返回按钮/导航栏返回的（无 targetId），则瞬间恢复至之前记录的滚动位置
+                window.scrollTo({ top: homeScrollPosition, left: 0, behavior: 'instant' });
             }
         }
 
