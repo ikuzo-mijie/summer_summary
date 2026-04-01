@@ -247,7 +247,7 @@
                 <div class="absolute top-[25%] left-0 w-full h-px bg-white"></div>
             </div>
             <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-                <div class="absolute top-[25%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.hey_i'm_wency (v0.6)</div>
+                <div class="absolute top-[25%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.hey_i'm_wency (v0.7)</div>
                 <div class="absolute top-[25%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
                     <div class="w-8 h-[1px] bg-white/30 absolute"></div>
                     <div class="h-8 w-[1px] bg-white/30 absolute"></div>
@@ -630,7 +630,7 @@
                     </div>
 
                     <!-- Card 6 (Proj 6 placeholder) -->
-                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView('proj-6')">
+                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showCoverToast(event, this, '✨ 敬请期待')">
                         <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
                             <img src="./SKILL.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
@@ -907,15 +907,15 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
                 <div>
                     <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
-                    <p class="text-zinc-300 text-sm">千万级实体小微商家</p>
+                    <p class="text-zinc-300 text-sm">千万级小微商家</p>
                 </div>
                 <div>
                     <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
-                    <p class="text-zinc-300 text-sm">体验升级<br/>端框架规范</p>
+                    <p class="text-zinc-300 text-sm">体验升级<br/>商家产品/营销规范</p>
                 </div>
                 <div>
                     <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
-                    <p class="text-zinc-300 text-sm">支付宝 商家服务</p>
+                    <p class="text-zinc-300 text-sm">支付宝 数字支付<br/>商家服务</p>
                 </div>
                 <div>
                     <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
@@ -983,11 +983,11 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
                 <div>
                     <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
-                    <p class="text-zinc-300 text-sm">抖音电商海量商家</p>
+                    <p class="text-zinc-300 text-sm">抖音电商商家</p>
                 </div>
                 <div>
                     <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
-                    <p class="text-zinc-300 text-sm">AI Design<br/>CUI会话设计</p>
+                    <p class="text-zinc-300 text-sm">CUI会话设计<br/>AI 规范</p>
                 </div>
                 <div>
                     <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
@@ -1124,39 +1124,6 @@
             </div>
         </div>
 
-        <!-- PROJECT 6: SKILLS & AGENT -->
-        <div id="proj-6" class="project-section hidden w-full">
-            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
-                Skills & Agent 学习与沉淀
-            </h1>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
-                <div>
-                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
-                    <p class="text-zinc-300 text-sm">内部团队与协同角色</p>
-                </div>
-                <div>
-                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
-                    <p class="text-zinc-300 text-sm">组件Skill化<br/>智能化资产构建</p>
-                </div>
-                <div>
-                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
-                    <p class="text-zinc-300 text-sm">规范与资产体系</p>
-                </div>
-                <div>
-                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
-                    <p class="text-zinc-300 text-sm">2024 - 2026</p>
-                </div>
-            </div>
-
-            <!-- Scroll Reveal Images Stack (3 images) -->
-            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
-                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj6-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
-                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj6-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
-                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj6-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
-            </div>
-        </div>
-
     </div>
 
     <!-- Interactive Scripts -->
@@ -1166,6 +1133,43 @@
 
         // 增加一个全局变量，用于记录离开主页时的滚动位置
         let homeScrollPosition = 0;
+
+        // --- 封面图视觉中心动态 Toast 逻辑 ---
+        function showCoverToast(event, element, message) {
+            // 彻底阻止任何默认跳转或冒泡事件
+            event.preventDefault();
+            event.stopPropagation();
+
+            // 如果已经有提示框，先移除
+            const existingToast = document.querySelector('.mouse-toast-dynamic');
+            if (existingToast) existingToast.remove();
+
+            // 获取卡片内的“封面图”容器
+            const coverEl = element.firstElementChild;
+            if (!coverEl) return;
+
+            // 创建新的提示框
+            const toast = document.createElement('div');
+            // 💡 修复点：移除了 backdrop-blur-md，改为了更稳固的实色背景 bg-zinc-900，并且增加了 whitespace-nowrap 防折行，避免消失时闪现黑方块的渲染 bug
+            toast.className = 'mouse-toast-dynamic absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] pointer-events-none px-5 py-2.5 bg-zinc-900 border border-brand/50 rounded-lg shadow-[0_0_20px_rgba(34,197,94,0.4)] text-white text-sm font-bold tracking-widest transition-all duration-300 opacity-0 scale-95 flex items-center justify-center whitespace-nowrap';
+            toast.innerText = message;
+
+            // 直接挂载到封面图容器内部
+            coverEl.appendChild(toast);
+
+            // 触发出现动画
+            requestAnimationFrame(() => {
+                toast.classList.remove('opacity-0', 'scale-95');
+                toast.classList.add('opacity-100', 'scale-100');
+            });
+
+            // 1秒后准时淡出并销毁
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'scale-100');
+                toast.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => toast.remove(), 300);
+            }, 1000);
+        }
 
         // --- SPA Routing Logic ---
         
