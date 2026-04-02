@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证访问 | WENXIN WONG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        body { font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif; background-color: #fafafa; }
+        .login-card { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .login-card.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-6">
+
+    <div id="loginCard" class="login-card w-full max-w-md bg-white border border-neutral-200 p-10 md:p-12 shadow-sm rounded-sm">
+        <h1 class="text-2xl font-light tracking-tight text-neutral-900 mb-2">私密作品集</h1>
+        <p class="text-sm text-neutral-500 mb-10 leading-relaxed">该页面受限访问。请点击下方按钮获取访问码，作者审核后将通过邮件回复您。</p>
+
+        <div class="space-y-6">
+            <div id="step1">
+                <button onclick="requestAccess()" id="requestBtn" class="w-full py-3 px-4 bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-800 transition-colors duration-300">
+                    获取访问密码
+                </button>
+            </div>
+
+            <div id="step2" class="hidden">
+                <div class="mb-4">
+                    <input type="text" id="passwordInput" placeholder="请输入收到的验证码" 
+                           class="w-full border-b border-neutral-300 py-3 outline-none focus:border-neutral-900 transition-colors text-sm uppercase tracking-widest">
+                </div>
+                <button onclick="verifyPassword()" class="w-full py-3 px-4 bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition-colors duration-300">
+                    验证并进入
+                </button>
+                <p id="errorMsg" class="text-red-500 text-xs mt-3 hidden text-center">验证码有误，请重新输入</p>
+            </div>
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-neutral-100">
+            <p class="text-[10px] text-neutral-400 uppercase tracking-widest">Contact: wencywong.118@gmail.com</p>
+        </div>
+    </div>
+
+    <script>
+        // 初始化 EmailJS (请在下文查看如何获取你的 Public Key)
+        (function() {
+            emailjs.init("mebIuf3B9JeweZUUg"); 
+        })();
+
+        window.onload = () => {
+            // 检查是否已经登录过
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                window.location.href = 'portfolio.html';
+            }
+            document.getElementById('loginCard').classList.add('visible');
+        };
+
+        function generatePassword() {
+            // 生成 6 位随机大写字母和数字组合
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+	async function requestAccess() {
+	    const btn = document.getElementById('requestBtn');
+	    
+	    // --- 步骤 A: 生成 6 位随机数字 ---
+	    // Math.random() 生成 0-1 之间的小数
+	    // 这里的逻辑保证生成的是 100000 到 999999 之间的整数
+	    const newPass = Math.floor(100000 + Math.random() * 900000).toString();
+	
+	    // --- 步骤 B: 临时存储密码 ---
+	    // 存入 sessionStorage，这样用户刷新页面前，我们可以拿这个值和用户输入的做对比
+	    sessionStorage.setItem('current_access_code', newPass);
+	
+	    // --- 步骤 C: 配置发送给 EmailJS 模板的参数 ---
+	    // 左侧的 key (如 access_code) 必须与你在 EmailJS 网页模板里写的 {{access_code}} 完全一致
+	    const templateParams = {
+	        to_email: 'wencywong.118@gmail.com', // 你的接收邮箱
+	        access_code: newPass,                // 这就是你要的随机数
+	        request_time: new Date().toLocaleString() // 格式化当前时间
+	    };
+	
+	    btn.disabled = true;
+	    btn.innerText = "发送中...";
+	
+	    try {
+	        // --- 步骤 D: 正式发送 ---
+	        // 请前往 EmailJS 后台获取这三个 ID 并替换
+	        await emailjs.send(
+	            'service_uq73njk',   // 替换为你的 Service ID (如: service_abc123)
+	            'template_kmjclxe',  // 替换为你的 Template ID (如: template_xyz456)
+	            templateParams
+	        );
+	        
+	        alert('验证码已发送至作者邮箱，请联系作者获取。');
+	        document.getElementById('step1').classList.add('hidden');
+	        document.getElementById('step2').classList.remove('hidden');
+	    } catch (error) {
+	        console.error('EmailJS Error:', error);
+	        alert('发送失败，请检查控制台报错或确认 EmailJS 配置。');
+	        btn.disabled = false;
+	        btn.innerText = "获取访问密码";
+	    }
+	}
+
+        function verifyPassword() {
+            const input = document.getElementById('passwordInput').value.trim().toUpperCase();
+            const correctPass = sessionStorage.getItem('current_access_code');
+
+            if (input === correctPass && correctPass !== null) {
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'portfolio.html'; // 跳转到主作品集页面
+            } else {
+                document.getElementById('errorMsg').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
