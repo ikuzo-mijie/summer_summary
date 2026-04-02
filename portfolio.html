@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WENXIN WONG | UI/UX Portfolio 2026</title>
+
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'Noto Sans SC', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#22c55e',
+                            light: '#4ade80',
+                            dark: '#16a34a',
+                            glow: 'rgba(34, 197, 94, 0.5)'
+                        },
+                        dark: {
+                            bg: '#050505',
+                            card: 'rgba(255, 255, 255, 0.03)',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'wave': 'wave 2.5s infinite',
+                        'wobble-simple': 'wobble_simple 1.2s ease-in-out infinite',
+                        'heartbeat': 'heartbeat 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        wave: {
+                            '0%': { transform: 'rotate(0.0deg)' },
+                            '10%': { transform: 'rotate(14.0deg)' },
+                            '20%': { transform: 'rotate(-8.0deg)' },
+                            '30%': { transform: 'rotate(14.0deg)' },
+                            '40%': { transform: 'rotate(-4.0deg)' },
+                            '50%': { transform: 'rotate(10.0deg)' },
+                            '60%, 100%': { transform: 'rotate(0.0deg)' },
+                        },
+                        wobble_simple: {
+                            '0%, 100%': { transform: 'rotate(0deg)' },
+                            '25%': { transform: 'rotate(-12deg)' },
+                            '75%': { transform: 'rotate(12deg)' },
+                        },
+                        heartbeat: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                            '50%': { transform: 'scale(0)', opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22c55e; 
+            border-radius: 4px;
+        }
+
+        /* Mouse Glow Effect */
+        #mouse-glow {
+            position: fixed;
+            top: 0; left: 0;
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 60%);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        background 0.4s ease, opacity 0.5s ease;
+            mix-blend-mode: screen;
+            will-change: transform;
+            opacity: 1;
+        }
+
+        #mouse-glow.stopped {
+            opacity: 0;
+        }
+
+        #mouse-glow.clicking {
+            width: 100px; height: 100px;
+            background: radial-gradient(circle, rgba(34,197,94,0.4) 0%, transparent 60%);
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stroke Text */
+        .text-stroke {
+            color: #050505; 
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.9);
+            paint-order: stroke fill;
+        }
+        
+        .hero-title-wrap:hover .text-stroke {
+            color: #22c55e;
+            -webkit-text-stroke: 1.5px transparent;
+            text-shadow: 0 0 40px rgba(34,197,94,0.4);
+            transition: all 0.3s ease;
+        }
+        
+        /* Bento Grid Timeline Styling */
+        .bento-card {
+            background: var(--dark-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hand-drawn Sketchy Ellipse for Skills (Fixed Roundness) */
+        .sketchy-ellipse {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sketchy-ellipse::before {
+            content: '';
+            position: absolute;
+            inset: -2px -6px; 
+            border: 2px solid #22c55e;
+            border-radius: 49% 51% 48% 52% / 51% 49% 52% 48%;
+            pointer-events: none;
+            transform: rotate(-1deg);
+            filter: drop-shadow(0 0 4px rgba(34,197,94,0.25));
+        }
+
+        /* Dynamic TV Static Noise */
+        .card-noise {
+            position: relative;
+            overflow: hidden;
+        }
+        .card-noise::after {
+            content: '';
+            position: absolute;
+            inset: -50%;
+            /* 恢复原始版本结构，仅将 baseFrequency 从 0.8 改为 1.6，实现颗粒缩小一倍 */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.35; 
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 15; 
+            animation: staticNoise 0.25s steps(4) infinite;
+        }
+        @keyframes staticNoise {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-2%, 2%); }
+            50% { transform: translate(2%, -2%); }
+            75% { transform: translate(-1%, 3%); }
+            100% { transform: translate(2%, -1%); }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand selection:text-black relative">
+
+    <!-- Ambient Effects -->
+    <div id="mouse-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center transition-all duration-300 backdrop-blur-md bg-black/60 border-b border-white/5" id="navbar">
+        <div class="flex items-center">
+            <!-- Abstract Shapes Logo -->
+            <a href="#top" onclick="navigateToHome('#top'); return false;" class="flex items-center gap-2.5 group cursor-pointer" aria-label="Home">
+                <div class="w-3.5 h-3.5 rounded-full bg-brand group-hover:-translate-y-1 transition-transform"></div>
+                <div class="w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[12px] border-b-white group-hover:-translate-y-1 transition-transform delay-75"></div>
+                <div class="w-3.5 h-3.5 bg-zinc-400 group-hover:-translate-y-1 transition-transform delay-150 rounded-sm"></div>
+            </a>
+            
+            <!-- Back Arrow Button -->
+            <button onclick="goBack()" class="flex items-center justify-center w-8 h-8 rounded-full bg-transparent border border-transparent hover:bg-white/10 hover:border-white/20 text-white hover:text-brand transition-all ml-6 cursor-pointer" aria-label="Go Back">
+                <i data-lucide="arrow-left" class="w-4 h-4 stroke-[2.5px]"></i>
+            </button>
+        </div>
+        
+        <!-- Nav Links -->
+        <div class="hidden md:flex gap-8 text-sm font-medium tracking-wide">
+            <a href="#about" onclick="navigateToHome('#about'); return false;" class="hover:text-brand transition-colors uppercase">ABOUT ME</a>
+            <a href="#works" onclick="navigateToHome('#works'); return false;" class="hover:text-brand transition-colors uppercase">WORKS</a>
+            <a href="#skills" onclick="navigateToHome('#skills'); return false;" class="hover:text-brand transition-colors uppercase">SKILLS</a>
+            <a href="#contact" onclick="navigateToHome('#contact'); return false;" class="hover:text-brand transition-colors uppercase">CONTACT ME</a>
+        </div>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: HOME PORTFOLIO VIEW                -->
+    <!-- ========================================== -->
+    <div id="home-view" class="block transition-opacity duration-500 relative">
+        
+        <!-- Hero Section -->
+        <header id="top" class="relative min-h-screen flex items-center justify-center pt-20 px-4 md:px-12 overflow-hidden">
+            
+            <!-- GLOBAL GEEK HUD UI -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[25%] left-0 w-full h-px bg-white"></div>
+            </div>
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <div class="absolute top-[25%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.hey_i'm_wency (v0.9)</div>
+                <div class="absolute top-[25%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                    <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                    <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+                </div>
+            </div>
+
+            <!-- Hero Content -->
+            <div class="w-full max-w-7xl relative z-10 flex flex-col items-center text-center mt-12">
+                <p class="text-brand font-medium tracking-[0.2em] uppercase mb-4 reveal delay-100">
+                    Work Summary 2026 • Portfolio
+                </p>
+                <div class="hero-title-wrap cursor-default reveal delay-200 flex flex-col items-center relative">
+                    <h1 class="text-[14vw] md:text-[10rem] font-black italic leading-[0.8] tracking-tighter text-stroke transition-all duration-500 font-inter uppercase">
+                        WENXIN
+                    </h1>
+                    <h1 class="text-[14vw] md:text-[10rem] font-black italic leading-[0.8] tracking-tighter text-white font-inter uppercase mt-1 md:mt-2">
+                        WONG.
+                    </h1>
+                </div>
+
+                <a href="#about" onclick="navigateToHome('#about'); return false;" class="text-zinc-500 hover:text-brand transition-colors cursor-pointer p-4 z-20 reveal delay-300 mt-6 mb-2">
+                    <i data-lucide="arrow-down" class="animate-bounce w-8 h-8"></i>
+                </a>
+
+                <div class="px-6 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-sm md:text-base flex items-center gap-3 reveal delay-400 shadow-xl">
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand animate-heartbeat shadow-[0_0_8px_rgba(34,197,94,0.8)] flex-shrink-0"></span>
+                    C端+B端 产品体验设计
+                </div>
+
+                <div class="font-inter font-bold text-zinc-300 text-lg md:text-2xl tracking-wide px-8 py-4 mt-6 rounded-xl border border-white/5 bg-white/5 backdrop-blur-sm reveal delay-500 shadow-2xl">
+                    <span class="text-brand">&lt;</span> Let's turn ideas to products <span class="text-brand">&gt;</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- About & Experience Section (1.5x padding) -->
+        <section id="about" class="pt-40 pb-24 md:pt-52 md:pb-24 px-4 md:px-12 relative z-10 flex flex-col justify-center overflow-hidden">
+            
+            <!-- GLOBAL GEEK HUD UI (No Tags here, only the grid lines) -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[15%] left-0 w-full h-px bg-white"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto w-full flex flex-col relative z-10">
+                
+                <!-- ABOUT ME Header (Two lines, text right aligned to ME.) -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between w-full mb-12 md:mb-16 gap-6 md:gap-8 reveal">
+                    
+                    <h2 class="text-5xl md:text-7xl lg:text-[7rem] font-black italic leading-[0.85] tracking-tighter uppercase mb-0 font-inter text-white flex flex-col shrink-0">
+                        <span>ABOUT</span>
+                        <div class="flex items-center mt-1 md:mt-2 relative">
+                            <span class="text-brand">ME.</span>
+                            <!-- Rotating Ring -->
+                            <div class="w-16 h-16 md:w-24 md:h-24 ml-4 opacity-60 animate-spin-slow pointer-events-none flex-shrink-0">
+                                <svg viewBox="0 0 100 100" class="w-full h-full text-zinc-400">
+                                    <defs><path id="circle2" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/></defs>
+                                    <text font-size="11.5" font-weight="bold" fill="currentColor" class="tracking-widest uppercase">
+                                        <textPath xlink:href="#circle2">User Experience Design • UI UX •</textPath>
+                                    </text>
+                                </svg>
+                            </div>
+                        </div>
+                    </h2>
+                    
+                    <!-- Forced to not break into 3 lines easily, right aligned visually -->
+                    <p class="text-zinc-400 text-sm md:text-base leading-relaxed max-w-[480px] lg:max-w-[560px] md:text-right pb-1 md:pb-3 shrink-0">
+                        10年+产品体验设计，从内容到金融，再到AI设计，<br class="hidden md:block"/>持续探索C端和B端不同业务场景下的创新与设计体系构建。
+                    </p>
+
+                </div>
+
+                <!-- Tightly Packed Experience Grid: 2 Rows Layout -->
+                <div class="flex flex-col gap-3 md:gap-4 reveal delay-300 w-full overflow-hidden">
+                    
+                    <!-- Row 1: 01 and 03 -->
+                    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-3 md:gap-4 w-full">
+                        
+                        <!-- 01 DOUYIN -->
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-5 py-6 md:px-8 md:py-8 rounded-xl">
+                            <!-- Pure rectangle line -->
+                            <div class="w-full h-[6px] bg-brand mb-4 md:mb-5 rounded-none"></div>
+                            <!-- Font-extrabold and scaled -->
+                            <div class="text-[4.5rem] md:text-[6rem] font-extrabold leading-[0.8] tracking-tighter text-brand font-inter">01</div>
+                            
+                            <h3 class="text-2xl md:text-3xl font-black uppercase text-brand font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">DOUYIN E-COMMERCE</h3>
+                            <p class="text-white font-bold text-base mt-2">抖音电商 / 体验设计专家</p>
+                            
+                            <div class="flex items-center gap-3 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-xs font-semibold tracking-widest uppercase shrink-0">2025 - NOW</span>
+                                <span class="inline-flex px-2 py-0.5 border border-brand/50 text-[10px] text-brand uppercase font-bold tracking-wider shrink-0">AI Design</span>
+                            </div>
+                            
+                            <p class="text-zinc-500 text-sm leading-relaxed mt-4 md:mt-5 font-medium">专注商家AI的意图探索与营销体验。</p>
+
+                            <!-- 修复点：移除了 grid-rows-0，使用静态高度与透明度/位移动画结合，杜绝布局跳动 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <div class="mb-3">• 探索LLM 在商家场景的经营助手形态与能力边界。</div>
+                                    <div class="mb-3">• 参与B 端规范体系建设，关注组件Skill化后带来的设计提效。</div>
+                                    <div>• 优化大促营销体验，显性平台活动价值，提高GMV。</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 03 ALIPAY (HUGE NUMBER) -->
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-5 py-6 md:px-8 md:py-8 rounded-xl">
+                            <!-- Pure rectangle line -->
+                            <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
+                            <!-- Scaled down number to ~80% of previous size but still larger than 01 -->
+                            <div class="text-[5rem] md:text-[7rem] lg:text-[8.5rem] font-extrabold leading-[0.75] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">03</div>
+                            
+                            <h3 class="text-2xl md:text-3xl lg:text-4xl font-black uppercase text-white group-hover:text-brand font-inter tracking-widest mt-5 md:mt-6 transition-colors duration-500 whitespace-nowrap">ALIPAY</h3>
+                            <p class="text-white font-bold text-base mt-2">支付宝 / 体验设计专家</p>
+                            
+                            <div class="flex items-center gap-3 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-xs font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2018 - 2023</span>
+                                <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">体验架构</span>
+                            </div>
+                            
+                            <p class="text-zinc-500 text-sm leading-relaxed mt-4 md:mt-5 font-medium group-hover:text-zinc-400 transition-colors duration-300">数字支付、内容生态等体系建设、横向设计质量把控。</p>
+
+                            <!-- 修复点 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-2 border-t border-white/10 text-sm text-zinc-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <div class="mb-3">• 重构支付工具，为千万级商家提供极简高效的移动端收单体验。</div>
+                                    <div class="mb-3">• 改版消息触达体系，针对信息进行分层与精细化设计。</div>
+                                    <div>• 搭建端框架底层设计规范及内容设计规范，跨业务协同设计。</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Row 2: 02, 04, 05 (1fr 1.4fr 1fr for wider center) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr_1fr] gap-3 md:gap-4 w-full">
+                        
+                        <!-- 02 STUDIO -->
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl">
+                            <!-- Pure rectangle line -->
+                            <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
+                            <div class="text-[3.5rem] md:text-[5rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">02</div>
+                            
+                            <!-- Font size shrunk to text-lg/xl to fit the narrower column -->
+                            <h3 class="text-lg md:text-xl font-black uppercase text-white group-hover:text-brand transition-colors duration-500 font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">DESIGN STUDIO</h3>
+                            <p class="text-white font-bold text-sm md:text-base mt-2">设计工作室 / 独立设计</p>
+                            
+                            <div class="flex items-center gap-2 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-[10px] font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2024 - 2025</span>
+                                <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">创业 / 创新</span>
+                            </div>
+                            
+                            <!-- 修复点 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-2 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <p class="text-sm text-zinc-500 font-normal leading-loose">对接外研社旗下应用的设计需求，如外研优学/趣学的品牌焕新升级，完整VI手册，智能对话助手尝试，日常运营活动等。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 04 NETEASE (SMALLER NUMBER) -->
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl">
+                            <!-- Pure rectangle line -->
+                            <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
+                            <!-- Font-extrabold small -->
+                            <div class="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">04</div>
+                            
+                            <h3 class="text-xl md:text-2xl font-black uppercase text-white group-hover:text-brand transition-colors duration-500 font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">NETEASE NEWS</h3>
+                            <p class="text-white font-bold text-sm md:text-base mt-2">网易新闻 / 资深设计师</p>
+                            
+                            <div class="flex items-center gap-2 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-[10px] font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2013 - 2018</span>
+                                <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">C端体验</span>
+                            </div>
+                            
+                            <!-- 修复点 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <p class="text-sm text-zinc-500 leading-relaxed mb-3 font-normal">专注持续升级图文短视频的分发与消费体验。</p>
+                                    <div class="text-sm text-zinc-500 leading-relaxed font-normal">
+                                        <div class="mb-3">• 主导信息流、内容详情、跟帖等核心模块体验改版。</div>
+                                        <div class="mb-3">• 网易财经移动端的金融设计。</div>
+                                        <div class="mb-3">• 2014/2018 世界杯、网易态度盛典等大型活动的策划与设计。</div>
+                                        <div>• 与Google 团队合作设计，使网易新闻成为Google推荐优秀App。</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 05 EARLY (SMALLER NUMBER) -->
+                        <div class="w-full flex flex-col group bg-transparent hover:bg-zinc-900 transition-colors duration-500 cursor-default relative z-10 px-4 py-6 md:px-6 md:py-8 rounded-xl">
+                            <!-- Pure rectangle line -->
+                            <div class="w-full h-[6px] bg-white group-hover:bg-brand transition-colors duration-500 mb-4 md:mb-5 rounded-none"></div>
+                            <!-- Font-extrabold small -->
+                            <div class="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] font-extrabold leading-[0.8] tracking-tighter text-white group-hover:text-brand transition-colors duration-500 font-inter">05</div>
+                            
+                            <h3 class="text-lg md:text-xl font-black uppercase text-white group-hover:text-brand transition-colors duration-500 font-inter tracking-widest mt-5 md:mt-6 whitespace-nowrap">EARLY CAREER</h3>
+                            <p class="text-white font-bold text-sm md:text-base mt-2">更早 / 3D与UI设计</p>
+                            
+                            <div class="flex items-center gap-2 mt-3 flex-nowrap whitespace-nowrap overflow-hidden">
+                                <span class="text-zinc-500 font-mono text-[10px] font-semibold tracking-widest uppercase group-hover:text-zinc-400 transition-colors shrink-0">2011 - 2013</span>
+                                <span class="inline-flex px-2 py-0.5 border border-white/50 group-hover:border-brand/50 text-[9px] md:text-[10px] text-zinc-300 group-hover:text-brand uppercase font-bold tracking-wider transition-colors duration-500 shrink-0">3D & UI</span>
+                            </div>
+
+                            <!-- 修复点 -->
+                            <div class="w-full">
+                                <div class="pt-4 mt-4 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-2 group-hover:translate-y-0">
+                                    <div class="text-sm text-zinc-500 leading-relaxed font-normal">
+                                        <div class="mb-3">• 音悦台 / 设计，创意活动设计，网站迭代优化等。</div>
+                                        <div class="mb-3">• George P. Johnson / Designer，西门子、阿尔斯通等公司的活动3D&2D设计，英文工作环境。</div>
+                                        <div>• 北京工业大学｜工业设计｜本科</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Works Portfolio Section -->
+        <section id="works" class="py-24 px-4 md:px-12 relative z-10 overflow-hidden">
+            
+            <!-- GLOBAL GEEK HUD UI -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[15%] left-0 w-full h-px bg-white"></div>
+            </div>
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <!-- HUD Tag repositioned above title cleanly -->
+                <div class="absolute top-[8%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.welcome_to_my_workshop_</div>
+                <div class="absolute top-[15%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                    <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                    <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto relative z-10 mt-8">
+                
+                <!-- Flex Aligned Title and Scroll Indicator -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal w-full gap-2 md:gap-0">
+                    <h2 class="text-5xl md:text-7xl lg:text-[7rem] font-black italic leading-[0.85] tracking-tighter uppercase m-0 font-inter">
+                        <span class="text-white">SELECTED</span><br/><span class="text-brand">WORKS.</span>
+                    </h2>
+                    <p class="text-white font-bold italic uppercase tracking-widest text-sm md:text-base font-inter pb-2 md:pb-4 mt-4 md:mt-0 text-left md:text-right ml-5">Scroll to explore</p>
+                </div>
+
+                <!-- 6 Column Image Grid with Custom TV Noise -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 md:gap-y-6">
+                    
+                    <!-- Card 1 (Proj 1) -->
+                    <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView('proj-1')">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="./ALIPAY.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
+                                <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="relative h-14 overflow-hidden mt-4">
+                            <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-brand mb-0.5">B端效率工具全链路重构</h3>
+                                    <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
+                                </div>
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">数字支付体验升级</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">商家服务 · 让天下没有难做的生意</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 (Proj 2 placeholder) -->
+                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView('proj-2')">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="./AI.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
+                                <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="relative h-14 overflow-hidden mt-4">
+                            <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-brand mb-0.5">AI 驱动以意图为核心的设计探索</h3>
+                                    <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
+                                </div>
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">商家Agent设计实践</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">CUI会话设计 · 抖音电商 抖店</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 (Proj 3 placeholder) -->
+                    <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView('proj-3')">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="./IM.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
+                                <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="relative h-14 overflow-hidden mt-4">
+                            <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-brand mb-0.5">C端 信息的精细化设计</h3>
+                                    <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
+                                </div>
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">支付宝消息触达体系</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">合理的框架 · 分层的触达 · 精细化的表达</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 (Proj 4 placeholder) -->
+                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showProjectView('proj-4')">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="./NETEASE.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
+                                <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="relative h-14 overflow-hidden mt-4">
+                            <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-brand mb-0.5">C 端多体裁的内容设计</h3>
+                                    <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
+                                </div>
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">网易新闻的内容消费体验</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">有态度的媒体 · 有态度的内容</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 (Proj 5 placeholder) -->
+                    <div class="group reveal cursor-pointer flex flex-col" onclick="showProjectView('proj-5')">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="./NEW.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
+                                <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="relative h-14 overflow-hidden mt-4">
+                            <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-brand mb-0.5">从真实用户出发挖掘新机会</h3>
+                                    <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
+                                </div>
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">创新业务</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">吆喝 · 小账本 · 金融设计</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 (Proj 6 placeholder) -->
+                    <div class="group reveal delay-100 cursor-pointer flex flex-col" onclick="showCoverToast(event, this, '✨ 敬请期待')">
+                        <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/5 card-noise bg-zinc-900">
+                            <img src="./SKILL.png" alt="项目展示图" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                            <div class="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center opacity-0 translate-y-4 -translate-x-4 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 ease-out z-20">
+                                <i data-lucide="arrow-up-right" class="text-black w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="relative h-14 overflow-hidden mt-4">
+                            <div class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform group-hover:-translate-y-1/2 h-[200%] w-full">
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-brand mb-0.5">不止设计</h3>
+                                    <p class="text-zinc-400 text-[11px] uppercase tracking-widest font-mono flex items-center gap-1">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></p>
+                                </div>
+                                <div class="h-1/2 w-full flex flex-col justify-center">
+                                    <h3 class="text-base font-bold text-zinc-100 mb-0.5">Skills & Agent 学习</h3>
+                                    <p class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono">让每一个想法成为可用的能力</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section (Hand-drawn Map) -->
+        <section id="skills" class="py-24 px-4 md:px-12 relative z-10 overflow-hidden">
+            
+            <!-- GLOBAL GEEK HUD UI -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[25%] left-0 w-full h-px bg-white"></div>
+            </div>
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <div class="absolute top-[8%] left-[5vw] md:left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-1 tracking-widest opacity-70">.skills_map_</div>
+                <div class="absolute top-[8%] right-[5vw] md:right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                    <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                    <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto relative z-10">
+                <!-- Title -->
+                <div class="text-left mb-2 reveal">
+                    <h2 class="text-5xl md:text-7xl lg:text-[7rem] font-black italic leading-[0.85] tracking-tighter uppercase font-inter text-white">
+                        SKILLS.
+                    </h2>
+                </div>
+
+                <!-- Sketchy Mind Map Layout -->
+                <div class="relative w-full max-w-[1000px] mx-auto aspect-auto md:aspect-[2/1] min-h-[500px] md:min-h-0 flex items-center justify-center reveal delay-100">
+                    
+                    <!-- Mobile View -->
+                    <div class="md:hidden flex flex-col items-center gap-6 w-full px-4 mt-4">
+                        <div class="w-40 h-40 bg-brand/10 border-2 border-brand rounded-full flex flex-col items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.2)] z-20">
+                            <span class="text-white text-xl font-black tracking-widest">核心</span>
+                            <span class="text-white text-xl font-black tracking-widest mt-1">设计能力</span>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-4 w-full mt-4">
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-lg">产品直觉</div>
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-xl">设计体系建设</div>
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-lg">项目管理</div>
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-base">人才培养管理</div>
+                            <div class="px-5 py-2 sketchy-ellipse text-white font-bold text-base">AI 协同</div>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-3 w-full mt-2">
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">数据驱动</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">视觉表现</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">商业思维</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">创新力</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">交互逻辑</div>
+                            <div class="px-4 py-2 bg-brand text-black font-bold rounded-full text-sm">用户思维</div>
+                        </div>
+                    </div>
+
+                    <!-- Desktop View -->
+                    <div class="hidden md:block absolute inset-0 w-full h-full">
+                        
+                        <!-- SVG Connecting Lines -->
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                            <defs>
+                                <marker id="sketchy-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                    <path d="M 0 1 L 8 5 L 0 9" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </marker>
+                            </defs>
+                            <path d="M 390 220 Q 300 160 260 190" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#sketchy-arrow)" stroke-linecap="round" class="filter drop-shadow-md"/>
+                            <path d="M 610 250 Q 700 210 750 260" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#sketchy-arrow)" stroke-linecap="round" class="filter drop-shadow-md"/>
+                            <path d="M 580 320 Q 650 380 720 400" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#sketchy-arrow)" stroke-linecap="round" class="filter drop-shadow-md"/>
+                        </svg>
+
+                        <!-- Central Core Node -->
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-52 h-52 bg-brand/10 border-2 border-brand rounded-full flex flex-col items-center justify-center z-20 shadow-[0_0_50px_rgba(34,197,94,0.15)] backdrop-blur-sm">
+                            <span class="text-white text-2xl font-black tracking-widest">核心</span>
+                            <span class="text-white text-2xl font-black tracking-widest mt-1">设计能力</span>
+                        </div>
+
+                        <!-- Inner Solid Green Pills -->
+                        <div class="absolute top-[32%] left-[40%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">数据驱动</div>
+                        <div class="absolute top-[38%] left-[62%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">视觉表现</div>
+                        <div class="absolute top-[58%] left-[68%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">商业思维</div>
+                        <div class="absolute top-[75%] left-[62%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">创新力</div>
+                        <div class="absolute top-[75%] left-[38%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">交互逻辑</div>
+                        <div class="absolute top-[56%] left-[32%] transform -translate-x-1/2 -translate-y-1/2 px-5 py-2 bg-brand text-black font-bold rounded-full text-sm z-20 whitespace-nowrap shadow-lg">用户思维</div>
+
+                        <!-- Outer Sketchy Hollow Ellipses -->
+                        <div class="absolute top-[38%] left-[16%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-6 py-2 sketchy-ellipse text-white font-bold text-2xl tracking-wide">产品直觉</div>
+                        </div>
+                        <div class="absolute top-[82%] left-[20%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-8 py-3 sketchy-ellipse text-white font-bold text-3xl tracking-wide">设计体系建设</div>
+                        </div>
+                        <div class="absolute top-[28%] left-[82%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-5 py-1.5 sketchy-ellipse text-white font-bold text-xl tracking-wide">人才培养管理</div>
+                        </div>
+                        <div class="absolute top-[54%] left-[85%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-6 py-2 sketchy-ellipse text-white font-bold text-2xl tracking-wide">项目管理</div>
+                        </div>
+                        <div class="absolute top-[84%] left-[80%] transform -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                            <div class="px-4 py-1.5 sketchy-ellipse text-white font-bold text-xl tracking-wide">AI 协同</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Footer Section -->
+        <footer id="contact" class="pt-24 pb-12 relative overflow-hidden flex flex-col justify-center min-h-[50vh]">
+            
+            <!-- GLOBAL GEEK HUD UI -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+                <div class="absolute inset-0 flex justify-between px-[10vw]">
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden md:block"></div>
+                    <div class="w-px h-full bg-white hidden lg:block"></div>
+                </div>
+                <div class="absolute top-[12%] left-0 w-full h-px bg-white"></div>
+            </div>
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <!-- Text repositioned safely -->
+                <div class="absolute top-[12%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.same_vibe?_message_me_</div>
+                <div class="absolute top-[12%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                    <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                    <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+                </div>
+            </div>
+
+            <!-- Content Container -->
+            <div class="max-w-7xl mx-auto px-4 md:px-12 w-full reveal mt-12 md:mt-8">
+                
+                <!-- 2-Line Footer Typography -->
+                <div class="group relative inline-block cursor-default mb-6 w-full text-left">
+                    <h2 class="text-[10vw] md:text-[6rem] lg:text-[7rem] font-black italic leading-[1.0] tracking-tighter text-white uppercase select-none font-inter transition-transform duration-500 group-hover:translate-x-2">
+                        LET'S TURN
+                        <span class="inline-block relative w-0 h-0">
+                            <!-- Perfect Waving Hand Animation with wrist anchored -->
+                            <span class="absolute left-2 md:left-4 bottom-[-0.2em] md:bottom-0 text-5xl md:text-6xl lg:text-7xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out origin-[70%_100%] z-20 pointer-events-none group-hover:animate-wave">
+                                👋
+                            </span>
+                        </span>
+                        <br/>
+                        <span class="text-brand">IDEAS TO PRODUCTS.</span>
+                    </h2>
+                </div>
+
+                <!-- Sleek Hobbies & Interests Section -->
+                <div class="mt-20 w-full border-t border-white/10 pt-16 flex flex-col items-start text-left">
+                    
+                    <h3 class="text-sm md:text-base font-bold italic tracking-widest uppercase mb-10 text-zinc-500 font-inter">HOBBIES & INTERESTS</h3>
+                    
+                    <!-- Left-aligned tight columns with smooth wobble hover -->
+                    <div class="flex flex-col md:flex-row flex-wrap gap-8 md:gap-16">
+                        <!-- Hobby 1 -->
+                        <div class="flex flex-col items-start group cursor-default">
+                            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/20 bg-white/5 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:border-brand shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+                                <span class="text-2xl md:text-3xl filter drop-shadow-md group-hover:animate-wobble-simple inline-block origin-center transition-transform duration-300">📖</span>
+                            </div>
+                            <h4 class="text-lg font-bold mb-1 tracking-wide text-white ml-3">阅读</h4>
+                            <p class="text-zinc-400 text-xs ml-3">持续学习、知识迁移</p>
+                        </div>
+                        <!-- Hobby 2 -->
+                        <div class="flex flex-col items-start group cursor-default">
+                            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/20 bg-white/5 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:border-brand shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+                                <span class="text-2xl md:text-3xl filter drop-shadow-md group-hover:animate-wobble-simple inline-block origin-center transition-transform duration-300">🤖</span>
+                            </div>
+                            <h4 class="text-lg font-bold mb-1 tracking-wide text-white ml-3">自动化</h4>
+                            <p class="text-zinc-400 text-xs ml-3">探索生活中的智能自动化</p>
+                        </div>
+                        <!-- Hobby 3 -->
+                        <div class="flex flex-col items-start group cursor-default">
+                            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/20 bg-white/5 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:border-brand shadow-[0_0_15px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+                                <span class="text-2xl md:text-3xl filter drop-shadow-md group-hover:animate-wobble-simple inline-block origin-center transition-transform duration-300">⛰️</span>
+                            </div>
+                            <h4 class="text-lg font-bold mb-1 tracking-wide text-white ml-3">徒步</h4>
+                            <p class="text-zinc-400 text-xs ml-3">爱世界、耐心与毅力</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Links -->
+                <div class="flex flex-col md:flex-row justify-start items-center gap-4 text-xs md:text-sm border-t border-white/10 pt-8 mt-20 relative z-10">
+                    <a href="mailto:wencywong.118@gmail.com" class="flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand/50 transition-all group">
+                        <i data-lucide="mail" class="text-brand group-hover:scale-110 transition-transform w-4 h-4"></i>
+                        wencywong.118@gmail.com
+                    </a>
+                    <a href="tel:13811734758" class="flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand/50 transition-all group">
+                        <i data-lucide="phone" class="text-brand group-hover:scale-110 transition-transform w-4 h-4"></i>
+                        13811734758
+                    </a>
+                    <div class="flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 border border-white/10 hover:border-brand/50 transition-all group cursor-default">
+                        <i data-lucide="message-circle" class="text-brand group-hover:scale-110 transition-transform w-4 h-4"></i>
+                        WeChat: DIS-118
+                    </div>
+                </div>
+
+                <div class="mt-16 text-zinc-600 text-xs flex flex-col md:flex-row justify-between items-center relative z-10">
+                    <p>© 2026 Wenxin Wong. All rights reserved.</p>
+                    <p class="mt-2 md:mt-0 flex items-center gap-2">Designed with <i data-lucide="heart" class="w-3 h-3 text-brand fill-brand"></i> Vibe Coding.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: PROJECT DETAIL VIEW (SPA Routing)  -->
+    <!-- ========================================== -->
+    <div id="project-view" class="hidden min-h-screen pt-32 pb-24 px-4 md:px-12 w-full max-w-7xl mx-auto transition-opacity duration-500 relative z-10">
+        
+        <!-- Global Close/Back Button -->
+        <div class="fixed top-8 right-8 md:right-12 z-50">
+            <button onclick="navigateToHome('#works')" class="w-12 h-12 rounded-full bg-zinc-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-brand hover:text-black hover:border-brand transition-all shadow-2xl group cursor-pointer">
+                <i data-lucide="x" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+            </button>
+        </div>
+
+        <!-- Details View GEEK HUD UI -->
+        <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-[0.06]">
+            <div class="absolute inset-0 flex justify-between px-[10vw]">
+                <div class="w-px h-full bg-white"></div>
+                <div class="w-px h-full bg-white"></div>
+                <div class="w-px h-full bg-white"></div>
+                <div class="w-px h-full bg-white hidden md:block"></div>
+                <div class="w-px h-full bg-white hidden md:block"></div>
+                <div class="w-px h-full bg-white hidden lg:block"></div>
+            </div>
+            <div class="absolute top-[20%] left-0 w-full h-px bg-white"></div>
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+            <div class="absolute top-[20%] left-[10vw] -translate-y-full text-[10px] text-zinc-400 font-mono pb-2 pl-2 tracking-widest opacity-70">.project_details_</div>
+            <div class="absolute top-[20%] right-[10vw] w-5 h-5 rounded-full border border-white/20 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-60">
+                <div class="w-8 h-[1px] bg-white/30 absolute"></div>
+                <div class="h-8 w-[1px] bg-white/30 absolute"></div>
+            </div>
+        </div>
+
+
+        <!-- PROJECT 1: ALIPAY B-END EFFICIENCY -->
+        <div id="proj-1" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                数字支付体验升级
+            </h1>
+
+            <!-- Meta Data Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">千万级小微商家</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">体验升级<br/>商家产品/营销规范</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">支付宝 数字支付<br/>商家服务</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2022 - 2023</p>
+                </div>
+            </div>
+
+            <!-- Scroll Reveal Images Stack (11 images, 16:9 aspect ratio) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+                
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-7.png" alt="项目展示图 7" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-8.png" alt="项目展示图 8" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-9.png" alt="项目展示图 9" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-10.png" alt="项目展示图 10" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video">
+                    <img src="./proj1-11.png" alt="项目展示图 11" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" />
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PROJECT 2: AI AGENT DESIGN -->
+        <div id="proj-2" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                商家Agent设计实践
+            </h1>
+
+            <!-- Meta Data Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">抖音电商商家</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">CUI会话设计<br/>AI 规范</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">抖音电商 抖店</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2025 - NOW</p>
+                </div>
+            </div>
+            <!-- Scroll Reveal Images Stack (6 images) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-[7/6]"><img src="./proj2-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj2-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+            </div>
+        </div>
+        
+        <!-- PROJECT 3: MESSAGE REACH -->
+        <div id="proj-3" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                支付宝消息触达体系
+            </h1>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">支付宝全量C端用户</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">体验升级<br/>精细化设计</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">支付宝</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2018 - 2023</p>
+                </div>
+            </div>
+
+            <!-- Scroll Reveal Images Stack (10 images) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-7.png" alt="项目展示图 7" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-8.png" alt="项目展示图 8" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-9.png" alt="项目展示图 9" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj3-10.png" alt="项目展示图 10" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+            </div>
+        </div>
+
+        <!-- PROJECT 4: NETEASE NEWS -->
+        <div id="proj-4" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                网易新闻的内容消费体验
+            </h1>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">泛资讯阅读群体</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">核心链路改版<br/>多体裁内容设计</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">网易新闻客户端</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2013 - 2018</p>
+                </div>
+            </div>
+
+            <!-- Scroll Reveal Images Stack (7 images) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj4-7.png" alt="项目展示图 7" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+            </div>
+        </div>
+
+        <!-- PROJECT 5: INNOVATION -->
+        <div id="proj-5" class="project-section hidden w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-sans font-medium mb-12 text-white tracking-tight reveal relative z-10">
+                创新业务探索与设计
+            </h1>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 reveal delay-100 relative z-10 border-y border-white/10 py-8">
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">目标用户</h4>
+                    <p class="text-zinc-300 text-sm">B端&C端细分潜力客群</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">核心职责</h4>
+                    <p class="text-zinc-300 text-sm">从0到1架构<br/>综合解决方案</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">所属业务</h4>
+                    <p class="text-zinc-300 text-sm">吆喝/小账本等创新业务</p>
+                </div>
+                <div>
+                    <h4 class="text-zinc-500 text-[11px] uppercase tracking-widest font-mono mb-2">设计周期</h4>
+                    <p class="text-zinc-300 text-sm">2018 - 2025</p>
+                </div>
+            </div>
+
+            <!-- Scroll Reveal Images Stack (8 images) -->
+            <div class="w-full flex flex-col gap-6 md:gap-10 relative z-10">
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-1.png" alt="项目展示图 1" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-2.png" alt="项目展示图 2" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-3.png" alt="项目展示图 3" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-4.png" alt="项目展示图 4" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-5.png" alt="项目展示图 5" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-6.png" alt="项目展示图 6" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-7.png" alt="项目展示图 7" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+                <div class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-zinc-900 relative reveal aspect-video"><img src="./proj5-8.png" alt="项目展示图 8" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500" /></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // 增加一个全局变量，用于记录离开主页时的滚动位置
+        let homeScrollPosition = 0;
+
+        // --- 封面图视觉中心动态 Toast 逻辑 ---
+        function showCoverToast(event, element, message) {
+            // 彻底阻止任何默认跳转或冒泡事件
+            event.preventDefault();
+            event.stopPropagation();
+
+            // 如果已经有提示框，先移除
+            const existingToast = document.querySelector('.mouse-toast-dynamic');
+            if (existingToast) existingToast.remove();
+
+            // 获取卡片内的“封面图”容器
+            const coverEl = element.firstElementChild;
+            if (!coverEl) return;
+
+            // 创建新的提示框
+            const toast = document.createElement('div');
+            // 💡 修复点：移除了 backdrop-blur-md，改为了更稳固的实色背景 bg-zinc-900，并且增加了 whitespace-nowrap 防折行，避免消失时闪现黑方块的渲染 bug
+            toast.className = 'mouse-toast-dynamic absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] pointer-events-none px-5 py-2.5 bg-zinc-900 border border-brand/50 rounded-lg shadow-[0_0_20px_rgba(34,197,94,0.4)] text-white text-sm font-bold tracking-widest transition-all duration-300 opacity-0 scale-95 flex items-center justify-center whitespace-nowrap';
+            toast.innerText = message;
+
+            // 直接挂载到封面图容器内部
+            coverEl.appendChild(toast);
+
+            // 触发出现动画
+            requestAnimationFrame(() => {
+                toast.classList.remove('opacity-0', 'scale-95');
+                toast.classList.add('opacity-100', 'scale-100');
+            });
+
+            // 1秒后准时淡出并销毁
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'scale-100');
+                toast.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => toast.remove(), 300);
+            }, 1000);
+        }
+
+        // --- SPA Routing Logic ---
+        
+        // 全局智能返回函数
+        function goBack() {
+            const projView = document.getElementById('project-view');
+            if (!projView.classList.contains('hidden')) {
+                // 如果当前在详情页，则执行返回首页（并恢复滚动锚点）的逻辑
+                navigateToHome();
+            } else {
+                // 如果当前已经在首页，则执行浏览器原生的“返回上一页”逻辑
+                window.history.back();
+            }
+        }
+
+        function showProjectView(projectId = 'proj-1') {
+            // 1. 记录当前主页的滚动高度
+            homeScrollPosition = window.scrollY;
+
+            const homeView = document.getElementById('home-view');
+            const projView = document.getElementById('project-view');
+            
+            // Toggle Views
+            homeView.classList.add('hidden');
+            projView.classList.remove('hidden');
+
+            // Hide all project sections
+            document.querySelectorAll('.project-section').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+
+            // Show target project section
+            const targetProj = document.getElementById(projectId);
+            if (targetProj) {
+                targetProj.classList.remove('hidden');
+                targetProj.classList.add('block');
+            }
+            
+            // 2. 使用 instant 行为强制瞬间置顶，拒绝从半腰往上滚
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+            // 3. 修复首屏不显示的 Bug：
+            // 因为置顶是瞬间发生的，IntersectionObserver 无法捕获滚动事件，
+            // 所以我们需要注销并重新监听详情页里的所有动画元素，强制它们立即进行一次视口检测。
+            setTimeout(() => {
+                document.querySelectorAll('#project-view .reveal').forEach(el => {
+                    el.classList.remove('active'); // 先清空状态
+                    revealObserver.unobserve(el); // 停止监听
+                    revealObserver.observe(el);   // 重新监听，立即触发首屏元素的浮现
+                });
+            }, 20); // 给浏览器 20ms 的渲染喘息时间
+        }
+
+        function navigateToHome(targetId) {
+            const homeView = document.getElementById('home-view');
+            const projView = document.getElementById('project-view');
+            
+            projView.classList.add('hidden');
+            homeView.classList.remove('hidden');
+            
+            if (targetId) {
+                // 如果是从顶部导航栏点击的（有 targetId），则平滑滚动到目标锚点
+                setTimeout(() => {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 10);
+            } else {
+                // 3. 如果是从详情页返回按钮/导航栏返回的（无 targetId），则瞬间恢复至之前记录的滚动位置
+                window.scrollTo({ top: homeScrollPosition, left: 0, behavior: 'instant' });
+            }
+        }
+
+        // --- Mouse Glow & Interaction Effect ---
+        const glow = document.getElementById('mouse-glow');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let isStoppedTimeout;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            requestAnimationFrame(() => {
+                glow.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+            });
+
+            glow.classList.remove('stopped');
+            clearTimeout(isStoppedTimeout);
+            isStoppedTimeout = setTimeout(() => {
+                glow.classList.add('stopped');
+            }, 150); 
+        });
+
+        document.addEventListener('mousedown', () => glow.classList.add('clicking'));
+        document.addEventListener('mouseup', () => glow.classList.remove('clicking'));
+
+        document.body.addEventListener('mouseover', (e) => {
+            if (e.target.closest('a, button, .group, .bento-card, .scroll-link')) {
+                glow.style.background = 'radial-gradient(circle, rgba(34,197,94,0.3) 0%, transparent 60%)';
+            }
+        });
+        document.body.addEventListener('mouseout', (e) => {
+            if (e.target.closest('a, button, .group, .bento-card, .scroll-link')) {
+                glow.style.background = ''; // reset
+            }
+        });
+
+        // --- Scroll Reveal Effect ---
+        const revealOptions = {
+            threshold: 0.05,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        const revealObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, revealOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    </script>
+</body>
+</html>
